@@ -101,6 +101,7 @@ def drinks_menu():
     if user_choice == 1:
         ui.display_drinks_table(drinks)
     elif user_choice == 2:
+        pass
     elif user_choice == 3:
         print("Not Implemented")
 
