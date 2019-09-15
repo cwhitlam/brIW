@@ -3,7 +3,7 @@ import sys
 from ui import UI
 import file_manager
 from json_file_manager import File_Manager
-from rounds import Round, Order
+from round import Round, Order
 from person import Person
 from drink import Drink
 
@@ -109,7 +109,7 @@ def get_drink_name_by_id(id):
         print(f"No drink with id: {id}")
         quit() 
    
-def add_new_preference():
+def change_preference():
     user_input = ""
     while user_input == "":
         user_input = input("Please enter the person's ID or press enter to display current preferences: ")
@@ -135,11 +135,12 @@ def preferences_menu():
     if user_choice == 1:
         ui.display_preferences_table(people)
     elif user_choice == 2:
-        add_new_preference()
+        change_preference()
 
 def create_round():
     ui.display_people_table(people)
     maker_id = input("Please enter your user id: ")
+    maker = people[int(maker_id)]
     drinkers = []
     orders = []
     while True:
@@ -150,8 +151,8 @@ def create_round():
     for person in drinkers:
         order = Order(person, person.prefered_drink)
         orders.append(order)
-    round = Round(maker_id, orders)
-    round.save_order()
+    round = Round(maker, orders)
+    round.save_round(file_man)
 
 def rounds_menu():
     ui.display_rounds_menu()

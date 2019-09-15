@@ -7,6 +7,7 @@ class Drink():
         return self.name
 
     def get_json_representation(self):
-        return {"id": self.id, 
-                "name": self.name
+        return {
+            "id": self.id, 
+            "name": self.name
         }
