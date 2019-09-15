@@ -55,16 +55,8 @@ def add_person_menu():
     person = Person(person_id, person_name, prefered_drink)
     people[person_id] = person
     file_man = File_Manager()
-
-    file_man.save_to_file(people, "src/stored_data/bork.json")
-    """
-    json_people = []
-    for person in people.values():
-        drink_id = person.prefered_drink.id
-        dic = {"id": person.id, "name": person.name, "prefered_drink_id": drink_id}
-        json_people.append(dic)
-    file_man.save_to_file(json_people, "./src/stored_data/bork.json")
-    """
+    json_rep = file_man.convert_to_json(people)
+    file_man.save_to_file(json_rep, "src/stored_data/people.json")
     print(f"{person_name} was successfully added")
 
 def add_drink():

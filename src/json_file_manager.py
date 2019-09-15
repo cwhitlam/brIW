@@ -4,17 +4,17 @@ from encoders import PersonEncoder, DrinkEncoder
 class File_Manager:
 
     def convert_to_json(self, data):
-        dic = {}
+        array = []
         for entry in data.values():
-            dic[entry.id] = entry.get_json_representation()
-        return dic
+            array.append(entry.get_json_representation())
+        return array
 
     def save_to_file(self, data, file_path):
         try:
             file = open(file_path, "w")
+            json.dump(data, file)
         except Exception as e:
             print(f"{e}: Couldn't save to file {file_path}")
-        json.dump(data, file)
 
     def save_to_file_w_encoder(self, data, encoder, file_path):
         try:
