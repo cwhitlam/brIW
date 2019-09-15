@@ -127,4 +127,7 @@ dmypy.json
 .pyre/
 
 # Data Security
-stored_data/*
+stored_data/
+
+# Vim
+.swp
