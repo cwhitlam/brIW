@@ -137,7 +137,7 @@ def preferences_menu():
     elif user_choice == 2:
         change_preference()
 
-def create_round():
+def create_new_round():
     ui.display_people_table(people)
     maker_id = input("Please enter your user id: ")
     maker = people[int(maker_id)]
@@ -151,8 +151,26 @@ def create_round():
     for person in drinkers:
         order = Order(person, person.prefered_drink)
         orders.append(order)
-    round = Round(maker, orders)
-    round.save_round(file_man)
+    current_round = Round(maker, orders)
+    current_round.save_round(file_man)
+
+def create_new_round_from_previous():
+    round = file_man.load_from_file("./src/stored_data/round.json")
+    maker = people[round["maker_id"]]
+    orders = []
+    for order in round["orders"]:
+        person = people[order["person_id"]]
+        drink  = drinks[order["drink_id"]]
+        orders.append(Order(person, drink))
+    current_round = Round(maker, orders)
+    ui.display_current_round(current_round)
+
+def show_current_round():
+    if current_round == None:
+        print ("Currently no round")
+        return
+    
+    ui.display_current_round(current_round)
 
 def rounds_menu():
     ui.display_rounds_menu()
@@ -160,7 +178,14 @@ def rounds_menu():
     user_choice = sanitize_user_number(user_input)
     os.system("clear")
     if user_choice == 1:
-        create_round()
+        create_new_round()
+        ask_to_return_to_menu()
+    if user_choice == 2:
+        create_new_round_from_previous()
+        ask_to_return_to_menu()
+    if user_choice == 3:
+        show_current_round()
+        ask_to_return_to_menu()
 
 def create_people_dict(people, drinks):
     people_dict = {}
@@ -180,6 +205,7 @@ def initialize():
     global people
     global ui
     global file_man
+    global current_round
 
     ui = UI()
     file_man = File_Manager()
@@ -188,6 +214,7 @@ def initialize():
     drinks = create_drinks_dict(drinks)
     people = file_man.load_from_file("./src/stored_data/people.json")
     people = create_people_dict(people, drinks)
+    current_round = None
 
 def main_menu():
     print("\nWelcome to BrIW v0.1")

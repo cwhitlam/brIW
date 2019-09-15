@@ -54,8 +54,9 @@ class UI:
     Please select an option:
 
         [1] Create a round
-        [2] Cancel a round
-        [3] Exit
+        [2] Create round from previous round
+        [3] Display current round
+        [4] Exit
         """
         print(menu_text)
 
@@ -69,4 +70,8 @@ class UI:
     
     def display_preferences_table(self, people):
         table = Table("PREFERENCES", ["name", "prefered_drink"], people, ["name", "prefered_drink"])
+        table.print_table()
+
+    def display_current_round(self, current_round):
+        table = Table("ROUND STARTED BY: " + current_round.maker.name, ["person", "drink"], current_round.orders)
         table.print_table()

@@ -1,7 +1,7 @@
 class Table:
     def __init__(self, table_title, object_attributes, table_contents, column_names = [], column_widths = []): 
         self.table_title       = table_title
-        self.table_contents    = table_contents
+        self.table_contents    = table_contents.values if isinstance(table_contents, dict) else table_contents
         self.object_attributes = object_attributes 
 
         #Used to set custom column names that are different to the class attributes.
@@ -28,7 +28,7 @@ class Table:
         
         for index in range(0, len(self.column_names)):
             column_width = len(self.column_names[index])
-            for row in self.table_contents.values():
+            for row in self.table_contents:
                 cell_text = getattr(row, self.object_attributes[index])
                 cell_text_length = len(str(cell_text))
                 if (cell_text_length > column_width):
@@ -49,7 +49,7 @@ class Table:
         print(seperator)
 
     def print_table_contents(self):
-        for row in self.table_contents.values():
+        for row in self.table_contents:
             row_text = ""
             for index in range(0, len(self.object_attributes)):
                 cell_text = str(getattr(row, self.object_attributes[index]))
