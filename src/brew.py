@@ -6,17 +6,11 @@ from json_file_manager import File_Manager
 from rounds import Round, Order
 from person import Person
 from drink import Drink
-from encoders import PersonEncoder
 
 def get_new_id(table):
     current_highest_id = list(table.keys())[-1]
     return current_highest_id + 1
 
-def add_to_table(table, row_to_add):
-    id = get_new_id(people)
-    row_to_add = row_to_add.capitalize()
-    table[id] = row_to_add
-    
 def ask_to_return_to_menu():
     user_input = input("Return to main menu? (Y/N): ")
     while user_input.upper() != "Y" and user_input.upper() != "N":
@@ -24,6 +18,7 @@ def ask_to_return_to_menu():
     if user_input.upper() == "N":
         exit_program()
     os.system("clear")
+
 def santitize_user_string(user_input):
     valid_user_input = user_input.isalpha()
     while not valid_user_input:
@@ -54,24 +49,27 @@ def add_person_menu():
     person_id = get_new_id(people)
     person = Person(person_id, person_name, prefered_drink)
     people[person_id] = person
-    file_man = File_Manager()
     json_rep = file_man.convert_to_json(people)
     file_man.save_to_file(json_rep, "src/stored_data/people.json")
     print(f"{person_name} was successfully added")
 
-def add_drink():
+def add_drink_menu():
     not_valid_drink = True
     while not_valid_drink:
         user_input = input("What drink would you like to add?: ")
-        drink = santitize_user_string(user_input)
-        drink = drink.capitalize()
-        if drink not in drinks.values():
+        drink_name = santitize_user_string(user_input)
+        drink_name = drink_name.capitalize()
+        if drink_name not in drinks.values():
             not_valid_drink = False
         else:
             print("Drink already in database, please enter a different drink or use the existing one")
-        add_to_table(drinks, drink)
-        file_manager.save_data_to_file("./stored_data/drinks.txt", drinks)
-        print(f"{drink} was successfully added")
+    
+    drink_id = get_new_id(drinks)
+    drink = Drink(drink_id, drink_name)
+    drinks[drink_id] = drink
+    json_rep = file_man.convert_to_json(drinks)
+    file_man.save_to_file(json_rep, "./src/stored_data/drinks.json")
+    print(f"{drink_name} was successfully added")
 
 def people_menu():
     ui.display_people_menu()
@@ -93,7 +91,7 @@ def drinks_menu():
     if user_choice == 1:
         ui.display_drinks_table(drinks)
     elif user_choice == 2:
-        pass
+        add_drink_menu()
     elif user_choice == 3:
         print("Not Implemented")
 
@@ -179,11 +177,12 @@ def create_drinks_dict(drinks):
 def initialize():
     global drinks
     global people
-    global preferences
     global ui
+    global file_man
 
     ui = UI()
     file_man = File_Manager()
+
     drinks = file_man.load_from_file("./src/stored_data/drinks.json")
     drinks = create_drinks_dict(drinks)
     people = file_man.load_from_file("./src/stored_data/people.json")
@@ -238,3 +237,4 @@ def main():
         
 if __name__ == "__main__":
     main()
+    

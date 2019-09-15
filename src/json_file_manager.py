@@ -1,6 +1,5 @@
 import json
-from person import Person
-from encoders import PersonEncoder, DrinkEncoder
+
 class File_Manager:
 
     def convert_to_json(self, data):
