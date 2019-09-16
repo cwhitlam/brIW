@@ -21,8 +21,7 @@ class UI:
 
         [1] List people
         [2] Add people
-        [3] Remove people
-        [4] Return to main menu
+        [3] Return to main menu
 
         """
         print(menu_text)

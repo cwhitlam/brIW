@@ -1,7 +1,7 @@
 class Table:
     def __init__(self, table_title, object_attributes, table_contents, column_names = [], column_widths = []): 
         self.table_title       = table_title
-        self.table_contents    = table_contents.values if isinstance(table_contents, dict) else table_contents
+        self.table_contents    = table_contents.values() if isinstance(table_contents, dict) else table_contents
         self.object_attributes = object_attributes 
 
         #Used to set custom column names that are different to the class attributes.

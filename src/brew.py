@@ -78,10 +78,12 @@ def people_menu():
     os.system("clear")
     if user_choice == 1:
         ui.display_people_table(people)
+        ask_to_return_to_menu()
     elif user_choice == 2:
-        add_person_menu()        
+        add_person_menu() 
+        ask_to_return_to_menu()       
     elif user_choice == 3:
-        print("Not Implemented")
+        pass
     
 def drinks_menu():
     ui.display_drinks_menu()
@@ -134,22 +136,32 @@ def preferences_menu():
     os.system("clear")
     if user_choice == 1:
         ui.display_preferences_table(people)
+        ask_to_return_to_menu()
     elif user_choice == 2:
         change_preference()
+        ask_to_return_to_menu()
 
 def create_new_round():
     ui.display_people_table(people)
-    maker_id = input("Please enter your user id: ")
+    maker_id = input("Who is serving the round (please enter their id): ")
     maker = people[int(maker_id)]
     drinkers = []
     orders = []
     while True:
-        person_id = input("Enter ID of drinker. ")
-        if person_id == "":
+        person_id = input("Enter ID of drinker. Type 'Q' when you have finished")
+        if person_id.upper  == "Q":
             break
-        drinkers.append(people[int(person_id)])
-    for person in drinkers:
-        order = Order(person, person.prefered_drink)
+        person = people[int(person_id)]
+        drinkers.append(person)
+        user_input = input(f"{person.name} usually has {person.prefered_drink}. Continue with this drink? (Y/N): ")
+        if user_input.upper() == "Y":
+            order = Order(person, person.prefered_drink)
+        elif user_input.upper() == "N":
+            drink_id = input("Please enter the drink id: ")
+            drink = drinks[drink_id]
+            order = Order(person, drink)
+        else:
+            print()
         orders.append(order)
     current_round = Round(maker, orders)
     current_round.save_round(file_man)
@@ -190,7 +202,10 @@ def rounds_menu():
 def create_people_dict(people, drinks):
     people_dict = {}
     for person in people:
-        prefered_drink = drinks[person["prefered_drink_id"]]
+        if person["prefered_drink_id"] == None:
+            prefered_drink = None
+        else:
+            prefered_drink = drinks[person["prefered_drink_id"]]
         people_dict[person["id"]] = Person(person["id"], person["name"], prefered_drink)
     return people_dict
 
@@ -225,16 +240,12 @@ def main_menu():
         os.system("clear")
         if user_choice == 1:
             people_menu()
-            ask_to_return_to_menu()
         elif user_choice == 2:
             drinks_menu()
-            ask_to_return_to_menu()
         elif user_choice == 3:
             preferences_menu()
-            ask_to_return_to_menu()
         elif user_choice == 4:
             rounds_menu()
-            ask_to_return_to_menu()
         elif user_choice == 5:
             exit_program()
         else:
