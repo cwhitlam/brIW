@@ -1,6 +1,6 @@
 class Table:
     def __init__(self, table_title, object_attributes, table_contents, column_names = [], column_widths = []): 
-        self.table_title       = table_title
+        self.table_title       = table_title.upper()
         self.table_contents    = table_contents.values() if isinstance(table_contents, dict) else table_contents
         self.object_attributes = object_attributes 
 
@@ -15,15 +15,15 @@ class Table:
         #Can be used to set custom widths per column.
         #Highly untested and not recommended
         if (column_widths == []):
-            self.column_widths = self.calculate_column_widths()
+            self.column_widths = self._calculate_column_widths()
         else:
             self.column_widths = column_widths
 
-    def calculate_table_width(self):
+    def _calculate_table_width(self):
         num_of_columns = len(self.object_attributes)
         return (2*num_of_columns + sum(self.column_widths)) +1
 
-    def calculate_column_widths(self):
+    def _calculate_column_widths(self):
         column_widths = []
         
         for index in range(0, len(self.column_names)):
@@ -58,7 +58,7 @@ class Table:
             print(row_text + "|")
 
     def print_table(self):
-        table_width = self.calculate_table_width()
+        table_width = self._calculate_table_width()
         self.print_table_header(table_width)
         self.print_table_contents()
         print("+" + "="*(table_width-2) +"+\n")
