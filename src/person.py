@@ -1,9 +1,8 @@
 class Person:
-    def __init__(self, id, name, prefered_drink, last_order = None):
+    def __init__(self, id, name, prefered_drink):
         self.id = id
         self.name = name
         self.prefered_drink = prefered_drink
-        self.last_order = last_order
 
     def __repr__(self):
         return self.name

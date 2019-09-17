@@ -19,44 +19,53 @@ def ask_to_return_to_menu():
         exit_program()
     os.system("clear")
 
-def santitize_user_string(user_input):
+def exit_program():
+    print("Exiting program...")
+    exit()
+
+def get_user_string(message):
+    user_input = input(message)
     valid_user_input = user_input.isalpha()
     while not valid_user_input:
         user_input = input("Please enter a valid string: ")
         valid_user_input = user_input.isalpha() 
     return str(user_input)
 
-def sanitize_user_number(user_input):
+def get_user_number(message, allow_blank = False):
+    user_input = input(message).strip()
+    if user_input == "" and allow_blank:
+        return user_input
     valid_user_input = user_input.isdigit()
     while not valid_user_input:
-        user_input = input("Please enter a number: ")
+        user_input = input("Please enter a number: ").strip()
+        if user_input == "" and allow_blank:
+            return user_input
         valid_user_input = user_input.isdigit() 
     return int(user_input)
 
-def exit_program():
-    print("Exiting program...")
-    exit()
+def save_people():
+    json_rep = file_man.convert_to_json(people)
+    file_man.save_to_file(json_rep, "src/stored_data/people.json")
+   
+def add_person(person):
+    people[person.id] = person
 
 def add_person_menu():
-    user_input = input("Who would you like to add?: ")
-    person_name = santitize_user_string(user_input)
+    person_name = get_user_string("Who would you like to add?: ")
     person_name = person_name.capitalize()
-    user_input = input("What is the id of thier prefered drink? (leave blank if no preferece): ")
+    drink_id = get_user_number("What is the id of thier prefered drink? (leave blank if no preference): ", True)
     prefered_drink = None
-    if user_input != "":
-        drink_id = sanitize_user_number(user_input)
+    if drink_id != "":
         prefered_drink = drinks[drink_id]
     person_id = get_new_id(people)
     person = Person(person_id, person_name, prefered_drink)
-    people[person_id] = person
-    json_rep = file_man.convert_to_json(people)
-    file_man.save_to_file(json_rep, "src/stored_data/people.json")
-    print(f"{person_name} was successfully added")
+    add_person(person)
+    save_people()
+    print(f"{person.name} was successfully added")
 
 def add_drink_menu():
     while True:
-        user_input = input("What drink would you like to add?: ")
-        drink_name = santitize_user_string(user_input)
+        drink_name = get_user_string("What drink would you like to add?: ")
         drink_name = drink_name.capitalize()
         if drink_name not in drinks.values():
             break
@@ -71,27 +80,32 @@ def add_drink_menu():
     print(f"{drink_name} was successfully added")
 
 def people_menu():
-    while True:
+    stay_on_menu = True
+    while stay_on_menu:
         ui.display_people_menu()
-        user_input = input("What would you like to do?: ")
-        user_choice = sanitize_user_number(user_input)
+        user_choice = get_user_number("What would you like to do?: ")
         os.system("clear")
-        if user_choice == 1:
-            ui.display_people_table(people)
-            ask_to_return_to_menu()
-        elif user_choice == 2:
-            add_person_menu() 
-            ask_to_return_to_menu()       
-        elif user_choice == 3:
-            break
-        else:
-            ui.print_error_message("Please enter a valid option!")
-    
+        stay_on_menu = handle_people_menu_choice(user_choice)
+        
+def handle_people_menu_choice(user_choice):
+    if user_choice == 1:
+        ui.display_people_table(people)
+        ask_to_return_to_menu()
+        return True
+    elif user_choice == 2:
+        add_person_menu() 
+        ask_to_return_to_menu()
+        return True       
+    elif user_choice == 3:
+        return False        
+    else:
+        ui.print_error_message("Please enter a valid option!")
+        return True
+        
 def drinks_menu():
     while True:
         ui.display_drinks_menu()
-        user_input = input("What would you like to do?: ")
-        user_choice = sanitize_user_number(user_input)
+        user_choice = get_user_number("What would you like to do?: ")
         os.system("clear")
         if user_choice == 1:
             ui.display_drinks_table(drinks)
@@ -121,14 +135,14 @@ def get_drink_name_by_id(id):
 def change_preference():
     user_input = ""
     while user_input == "":
-        user_input = input("Please enter the person's ID or press enter to display current preferences: ")
+        user_input = get_user_number("Please enter the person's ID or press enter to display current preferences: ", True)
         if user_input == "":
             ui.display_preferences_table(people)
 
     person_id = int(user_input)
     user_input = ""
     while user_input == "":
-        user_input = input("Please enter the drinks's ID or press enter to display current preferences: ")
+        user_input = get_user_number("Please enter the drinks's ID or press enter to display current preferences: ", True)
         if user_input == "":
             ui.display_preferences_table(people)
 
@@ -139,8 +153,7 @@ def change_preference():
 def preferences_menu():
     while True:
         ui.display_preferences_menu()
-        user_input = input("What would you like to do?: ")
-        user_choice = sanitize_user_number(user_input)
+        user_choice = get_user_number("What would you like to do?: ")
         os.system("clear")
         if user_choice == 1:
             ui.display_preferences_table(people)
@@ -155,13 +168,13 @@ def preferences_menu():
 
 def create_new_round():
     ui.display_people_table(people)
-    maker_id = input("Who is serving the round (please enter their id): ")
+    maker_id = get_user_number("Who is serving the round (please enter their id): ")
     maker = people[int(maker_id)]
     drinkers = []
     orders = []
     while True:
-        person_id = input("Enter ID of drinker. Type 'Q' when you have finished")
-        if person_id.upper  == "Q":
+        person_id = get_user_number("Enter ID of drinker. Press enter when you want to stop: ", True)
+        if person_id  == "":
             break
         person = people[int(person_id)]
         drinkers.append(person)
@@ -198,8 +211,7 @@ def show_current_round():
 
 def rounds_menu():
     ui.display_rounds_menu()
-    user_input = input("What would you like to do?: ")
-    user_choice = sanitize_user_number(user_input)
+    user_choice = get_user_number("What would you like to do?: ")
     os.system("clear")
     if user_choice == 1:
         create_new_round()
@@ -247,8 +259,7 @@ def main_menu():
     print("\nWelcome to BrIW v0.1")
     while True:
         ui.display_main_menu()
-        user_input = input("What would you like to do?: ")
-        user_choice = sanitize_user_number(user_input)
+        user_choice = get_user_number("What would you like to do?: ")
         os.system("clear")
         if user_choice == 1:
             people_menu()
