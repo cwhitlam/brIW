@@ -12,7 +12,7 @@ def get_new_id(table):
     return current_highest_id + 1
 
 def ask_to_return_to_menu():
-    user_input = input("Return to main menu? (Y/N): ")
+    user_input = input("Return to previous menu? (Y/N): ")
     while user_input.upper() != "Y" and user_input.upper() != "N":
         user_input = input("Please enter either Y or N: ").upper()
     if user_input.upper() == "N":
@@ -54,15 +54,14 @@ def add_person_menu():
     print(f"{person_name} was successfully added")
 
 def add_drink_menu():
-    not_valid_drink = True
-    while not_valid_drink:
+    while True:
         user_input = input("What drink would you like to add?: ")
         drink_name = santitize_user_string(user_input)
         drink_name = drink_name.capitalize()
         if drink_name not in drinks.values():
-            not_valid_drink = False
+            break
         else:
-            print("Drink already in database, please enter a different drink or use the existing one")
+            ui.print_error_message("Drink already in database, please enter a different drink or use the existing one")
     
     drink_id = get_new_id(drinks)
     drink = Drink(drink_id, drink_name)
@@ -72,30 +71,38 @@ def add_drink_menu():
     print(f"{drink_name} was successfully added")
 
 def people_menu():
-    ui.display_people_menu()
-    user_input = input("What would you like to do?: ")
-    user_choice = sanitize_user_number(user_input)
-    os.system("clear")
-    if user_choice == 1:
-        ui.display_people_table(people)
-        ask_to_return_to_menu()
-    elif user_choice == 2:
-        add_person_menu() 
-        ask_to_return_to_menu()       
-    elif user_choice == 3:
-        pass
+    while True:
+        ui.display_people_menu()
+        user_input = input("What would you like to do?: ")
+        user_choice = sanitize_user_number(user_input)
+        os.system("clear")
+        if user_choice == 1:
+            ui.display_people_table(people)
+            ask_to_return_to_menu()
+        elif user_choice == 2:
+            add_person_menu() 
+            ask_to_return_to_menu()       
+        elif user_choice == 3:
+            break
+        else:
+            ui.print_error_message("Please enter a valid option!")
     
 def drinks_menu():
-    ui.display_drinks_menu()
-    user_input = input("What would you like to do?: ")
-    user_choice = sanitize_user_number(user_input)
-    os.system("clear")
-    if user_choice == 1:
-        ui.display_drinks_table(drinks)
-    elif user_choice == 2:
-        add_drink_menu()
-    elif user_choice == 3:
-        print("Not Implemented")
+    while True:
+        ui.display_drinks_menu()
+        user_input = input("What would you like to do?: ")
+        user_choice = sanitize_user_number(user_input)
+        os.system("clear")
+        if user_choice == 1:
+            ui.display_drinks_table(drinks)
+            ask_to_return_to_menu()
+        elif user_choice == 2:
+            add_drink_menu()
+            ask_to_return_to_menu()
+        elif user_choice == 3:
+            break
+        else:
+            ui.print_error_message("Please enter a valid option!")
 
 def get_person_name_by_id(id):
     try:
@@ -130,16 +137,21 @@ def change_preference():
     people[person_id].set_prefered_drink(prefered_drink)
 
 def preferences_menu():
-    ui.display_preferences_menu()
-    user_input = input("What would you like to do?: ")
-    user_choice = sanitize_user_number(user_input)
-    os.system("clear")
-    if user_choice == 1:
-        ui.display_preferences_table(people)
-        ask_to_return_to_menu()
-    elif user_choice == 2:
-        change_preference()
-        ask_to_return_to_menu()
+    while True:
+        ui.display_preferences_menu()
+        user_input = input("What would you like to do?: ")
+        user_choice = sanitize_user_number(user_input)
+        os.system("clear")
+        if user_choice == 1:
+            ui.display_preferences_table(people)
+            ask_to_return_to_menu()
+        elif user_choice == 2:
+            change_preference()
+            ask_to_return_to_menu()
+        elif user_choice == 3:
+            break
+        else:
+            ui.print_error_message("Please enter a valid option")
 
 def create_new_round():
     ui.display_people_table(people)

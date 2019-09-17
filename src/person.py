@@ -18,6 +18,3 @@ class Person:
             "name": self.name, 
             "prefered_drink_id": drink_id
         }
-
-    #def __repr__(self):
-        #return self.name

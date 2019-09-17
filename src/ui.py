@@ -1,7 +1,8 @@
 from table import Table
+from colours import Colours
 class UI:
     def __init__(self):
-        pass
+        self.colours = Colours()
 
     def display_main_menu(self):
         menu_text = """
@@ -32,8 +33,7 @@ class UI:
 
         [1] List drinks
         [2] Add drinks
-        [3] Remove drinks
-        [4] Return to main menu
+        [3] Return to main menu
 
         """
         print(menu_text)
@@ -44,7 +44,7 @@ class UI:
 
         [1] Display preferences
         [2] Add person's preferences
-        [3] Exit   
+        [3] Return to main menu   
         """
         print(menu_text)
 
@@ -74,3 +74,6 @@ class UI:
     def display_current_round(self, current_round):
         table = Table("ROUND STARTED BY: " + current_round.maker.name, ["person", "drink"], current_round.orders)
         table.print_table()
+
+    def print_error_message(self, message):
+        print(self.colours.ERROR + message + self.colours.ENDC)
