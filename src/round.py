@@ -20,7 +20,7 @@ class Round:
         for order in self.orders:
             orders_array.append({
                 "person_id": order.person.id,
-                "drink_id": order.drink.id
+                "drink_id": None if order.drink == None else order.drink.id
             })
         json_rep["orders"] = orders_array
         return json_rep
