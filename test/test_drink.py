@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.insert(1, "/home/chris/repos/miniproject/src/")
-from drink import Drink
+from src.core.drink import Drink
 
 class TestDrink(unittest.TestCase):
 

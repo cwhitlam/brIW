@@ -1,8 +1,8 @@
 import sys
 import unittest
 sys.path.insert(1, "/home/chris/repos/miniproject/src/")
-from table import Table
-from drink import Drink
+from src.ui.table import Table
+from src.core.drink import Drink
 
 class TestTable(unittest.TestCase):
 

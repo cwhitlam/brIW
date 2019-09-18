@@ -1,17 +1,19 @@
 import os
-from abc import ABCMeta, abstractmethod
-from json_file_manager import File_Manager
-from table import Table
-from person import Person
-from drink import Drink
-from round import Round, Order
-from ui import UI
+from abc import ABC, ABCMeta, abstractmethod
+from src.json_file_manager import File_Manager
+from src.ui.table import Table
+from src.core.person import Person
+from src.core.drink import Drink
+from src.core.round import Round, Order
+from src.ui.ui import UI
 
-class Menu:
+class AbstractMenu(ABC):
     @abstractmethod
     def __init__(self, accessor, file_man):
         self.accessor = accessor
+        
         self.file_man = file_man
+        self.ui = UI(self.accessor)
 
     @abstractmethod
     def show_menu(self):
@@ -67,7 +69,7 @@ class Menu:
             valid_user_input = user_input.isdigit() 
         return int(user_input)
 
-class MainMenu(Menu):
+class MainMenu(AbstractMenu):
     def __init__(self, accessor):
         super().__init__(accessor, None)
 
@@ -95,7 +97,7 @@ class MainMenu(Menu):
             self.clear_terminal()
             self.handle_menu_choice(user_choice)
 
-class PeopleMenu(Menu):
+class PeopleMenu(AbstractMenu):
     def __init__(self, accessor, file_man):
         super().__init__(accessor, file_man)
     
@@ -128,13 +130,9 @@ class PeopleMenu(Menu):
         """
         print(menu_text)
 
-    def display_people_table(self, people):
-        table = Table("PEOPLE", ["id", "name"], people)
-        table.print_table()
-
     def handle_menu_choice(self, user_choice):
         if user_choice == 1:
-            self.display_people_table(self.accessor.get_people())
+            self.ui.display_people_table()
             self.ask_to_return_to_menu()
             return True
         elif user_choice == 2:
@@ -147,7 +145,7 @@ class PeopleMenu(Menu):
             self.print_error_message("Please enter a valid option!")
             return True
 
-class DrinksMenu(Menu):
+class DrinksMenu(AbstractMenu):
     def __init__(self, accessor, file_man):
         super().__init__(accessor, file_man)
 
@@ -161,10 +159,6 @@ class DrinksMenu(Menu):
 
         """
         print(menu_text)
-
-    def display_drinks_table(self, drinks):
-        table = Table("DRINKS", ["id", "name"], drinks, ["id", "drink"])
-        table.print_table()
 
     def add_drink_menu(self):
         drinks = self.accessor.get_drinks()
@@ -185,7 +179,7 @@ class DrinksMenu(Menu):
 
     def handle_menu_choice(self, user_choice):
         if user_choice == 1:
-            self.display_drinks_table(self.accessor.get_drinks())
+            self.ui.display_drinks_table()
             self.ask_to_return_to_menu()
             return True
         elif user_choice == 2:
@@ -198,7 +192,7 @@ class DrinksMenu(Menu):
             self.print_error_message("Please enter a valid option!")
             return True
 
-class PreferencesMenu(Menu):
+class PreferencesMenu(AbstractMenu):
     def __init__(self, accessor, file_man):
         super().__init__(accessor, file_man)
 
@@ -212,10 +206,6 @@ class PreferencesMenu(Menu):
         """
         print(menu_text)
 
-    def display_preferences_table(self):
-        table = Table("PREFERENCES", ["name", "prefered_drink"], self.accessor.get_people(), ["name", "prefered_drink"])
-        table.print_table()
-
     def change_preference(self):
         people = self.accessor.get_people()
         drinks = self.accessor.get_drinks()
@@ -223,14 +213,14 @@ class PreferencesMenu(Menu):
         while user_input == "":
             user_input = self.get_user_number("Please enter the person's ID or press enter to display current preferences: ", True)
             if user_input == "":
-                self.display_preferences_table()
+                self.ui.display_preferences_table()
 
         person_id = int(user_input)
         user_input = ""
         while user_input == "":
             user_input = self.get_user_number("Please enter the drinks's ID or press enter to display current preferences: ", True)
             if user_input == "":
-                self.display_preferences_table()
+                self.ui.display_preferences_table()
 
         drink_id = int(user_input)
         prefered_drink = drinks[drink_id]
@@ -240,7 +230,7 @@ class PreferencesMenu(Menu):
 
     def handle_menu_choice(self, user_choice):
         if user_choice == 1:
-            self.display_preferences_table()
+            self.ui.display_preferences_table()
             self.ask_to_return_to_menu()
             return True
         elif user_choice == 2:
@@ -253,12 +243,12 @@ class PreferencesMenu(Menu):
             self.print_error_message("Please enter a valid option")
             return True
 
-class RoundMenu(Menu):
+class RoundMenu(AbstractMenu):
     def __init__(self, accessor, file_man):
         super().__init__(accessor, file_man)
 
     def show_menu(self):
-        self.show_current_round()
+        self.ui.display_current_round()
         menu_text = """
     Please select an option:
 
@@ -270,7 +260,7 @@ class RoundMenu(Menu):
         print(menu_text)
     
     def create_new_round(self):
-        #ui.display_people_table(people)
+        self.ui.display_people_table()
         people = self.accessor.get_people()
         drinks = self.accessor.get_drinks()
         maker_id = self.get_user_number("Who is serving the round (please enter their id): ")
@@ -305,19 +295,14 @@ class RoundMenu(Menu):
         orders = []
         for order in round["orders"]:
             person = people[order["person_id"]]
-            drink  = drinks[order["drink_id"]]
+            if order["drink_id"] in list(drinks.keys()):
+                drink  = drinks[order["drink_id"]]
+            else:
+                drink = None
             orders.append(Order(person, drink))
         current_round = Round(maker, orders)
         self.accessor.set_current_round(current_round)
-        UI.display_current_round(self,current_round)
-
-    def show_current_round(self):
-        current_round = self.accessor.get_current_round()
-        if current_round == None:
-            print ("Currently no round")
-            return
-        
-        UI.display_current_round(self, current_round)
+        self.ui.display_current_round()
 
     def handle_menu_choice(self, user_choice):
         if user_choice == 1:
@@ -329,7 +314,7 @@ class RoundMenu(Menu):
             self.ask_to_return_to_menu()
             return True
         elif user_choice == 3:
-            self.show_current_round()
+            self.ui.display_current_round()
             self.ask_to_return_to_menu()
             return True
         elif user_choice == 4:
@@ -347,5 +332,10 @@ class MenuFactory:
             3: PreferencesMenu(accessor, file_man),
             4: RoundMenu(accessor, file_man)
         }
+
+        if key == len(sub_menu) + 1:
+            print("Exiting program...")
+            exit()
+        
         return sub_menu[key]
         
