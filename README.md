@@ -4,7 +4,7 @@ This application assumes you already have the following installed:
 
 - python3
 - pip3
-- virtualenv & virtualenvwrapper (Recommended)
+- virtualenv & virtualenvwrapper *(Recommended)*
 
 ## Setup
 It's recommended that a new virtual environment is create for this application:

@@ -1,0 +1,11 @@
+INSERT INTO people(first_name, surname)
+VALUES 
+    ("Chris", "Whitlam"),
+    ("Greg", "Ford"),
+    ("Connor", "Avery");
+
+INSERT INTO drinks(name)
+VALUES
+    ("Filter Coffee"),
+    ("Tea"),
+    ("Green Tea");
