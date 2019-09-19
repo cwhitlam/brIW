@@ -9,7 +9,7 @@ MAKE SURE YOU USE THE `menus`BRANCH
 - Create a new virtual environment with: `mkvirtualenv briw`
 - `workon briw`
 - Navigate to `miniproject` folder
-- `pip install -r requirements.txt`
+- `pip3 install -r requirements.txt`
 ## Run
 - Navigate to the `miniproject` directory
 - run `python3 briw.py`
