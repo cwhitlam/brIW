@@ -45,8 +45,12 @@ class Accessor:
         return drinks_dict
 
     def get_new_id(self, table):
-        current_highest_id = list(table.keys())[-1]
-        return current_highest_id + 1
+        #if table is false. dictionary is empty, return 0 id for first item
+        if bool(table):
+            current_highest_id = list(table.keys())[-1]
+            return current_highest_id + 1
+        else:
+            return 0
 
     def get_person_name_by_id(self, id):
         
