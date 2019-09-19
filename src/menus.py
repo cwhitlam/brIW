@@ -6,7 +6,7 @@ from src.core.person import Person
 from src.core.drink import Drink
 from src.core.round import Round, Order
 from src.ui.ui import UI
-
+import src.core.devito as danny
 class AbstractMenu(ABC):
     @abstractmethod
     def __init__(self, accessor, file_man):
@@ -35,6 +35,8 @@ class AbstractMenu(ABC):
         print("\033[91m" + message + "\033[0m")
 
     def clear_terminal(self):
+        danny.devito_time()
+        input("")
         os.system("clear")
 
     def ask_to_return_to_menu(self):
