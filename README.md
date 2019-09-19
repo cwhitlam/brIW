@@ -3,16 +3,26 @@
 This application assumes you already have the following installed:
 
 - python3
-- virtualenvwrapper
+- pip3
+- virtualenv & virtualenvwrapper (Recommended)
+
 ## Setup
-MAKE SURE YOU USE THE `menus`BRANCH
-- Create a new virtual environment with: `mkvirtualenv briw`
-- `workon briw`
+It's recommended that a new virtual environment is create for this application:
+```
+mkvirtualenv briw
+workon briw
+```
+To install dependencies:
 - Navigate to `miniproject` folder
 - `pip3 install -r requirements.txt`
+
+For GDPR reasons, you'll need to create `person.json` and `drinks.json` files in the `src/stored_data/` folder. The contents of both files should be the following:
+`[]`
+
 ## Run
 - Navigate to the `miniproject` directory
 - run `python3 briw.py`
+
 ## Contributing
 To contribute you can fork the repository and make any changes. Make sure you run all tests.  
 
