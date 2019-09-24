@@ -3,7 +3,7 @@ from src.core.drink import Drink
 import src.core.db as queries
 
 class Accessor:
-    def __init__(self, file_man):
+    def __init__(self, file_man =None):
         self.current_round = None
         self.file_man = file_man
 

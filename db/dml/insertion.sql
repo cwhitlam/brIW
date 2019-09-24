@@ -9,3 +9,8 @@ VALUES
     ("Filter Coffee"),
     ("Tea"),
     ("Green Tea");
+
+INSERT INTO preferences(person_id, drink_id)
+VALUES
+    (1, 1),
+    (2, 3);
