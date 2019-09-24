@@ -1,20 +1,28 @@
 from src.core.person import Person
 from src.core.drink import Drink
+import src.core.db as queries
 
 class Accessor:
     def __init__(self, file_man):
-        drinks = file_man.load_from_file("./src/stored_data/drinks.json")
-        self.drinks = self.create_drinks_dict(drinks)
-        people = file_man.load_from_file("./src/stored_data/people.json")
-        self.people = self.create_people_dict(people, self.drinks)
         self.current_round = None
         self.file_man = file_man
 
-    def get_people(self):
-        return self.people
+    def get_people_dict(self):
+        result = queries.get_all_people()
+        people = {}
+        for person in result:
+            drink_obj = Drink(person["drink_id"], person["drink_name"])
+            person_obj = Person(person["person_id"], person["first_name"], drink_obj)
+            people[person["person_id"]] = person_obj
+        return people
 
-    def get_drinks(self):
-        return self.drinks
+    def get_drinks_dict(self):
+        result = queries.get_all_drinks()
+        drinks = {}
+        for drink in result:
+            drink_obj = Drink(drink["drink_id"], drink["name"])
+            drinks[drink["drink_id"]] = drink_obj
+        return drinks
 
     def set_people(self, people):
         self.people = people
@@ -27,22 +35,6 @@ class Accessor:
 
     def set_current_round(self, current_round):
         self.current_round = current_round
-
-    def create_people_dict(self, people, drinks):
-        people_dict = {}
-        for person in people:
-            if person["prefered_drink_id"] == None:
-                prefered_drink = None
-            else:
-                prefered_drink = drinks[person["prefered_drink_id"]]
-            people_dict[person["id"]] = Person(person["id"], person["name"], prefered_drink)
-        return people_dict
-
-    def create_drinks_dict(self, drinks):
-        drinks_dict = {}
-        for drink in drinks:
-            drinks_dict[drink["id"]] = Drink(drink["id"], drink["name"])
-        return drinks_dict
 
     def get_new_id(self, table):
         #if table is false. dictionary is empty, return 0 id for first item

@@ -1,0 +1,94 @@
+body {
+    background-color: #2d2d2d;
+    color: white;
+    font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
+    margin: 0px 0px 0px 0px;
+}
+
+h1 {
+    color: #ed6b39;
+    font-size: 60px;
+    padding-left: 170px;
+}
+
+#iw-logo {
+    width: 50%;
+    margin-left: auto;
+    margin-right:auto;
+    display: block;
+    top:-20px;
+}
+
+.briw-logo {
+    max-width: 150px;
+    float: left;
+    padding-right: 0px;
+    transition: 0.5s;
+    position: absolute;
+    top: 25px;
+}
+
+.header {
+    background-color: #333F48;
+    padding: 15px 15px 0px 15px;
+    position: fixed;
+    min-width: 100%;
+    top: 0;
+}
+
+.content {
+    width: 80%;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 15px;
+}
+
+h2 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 10px;
+}
+
+.orange-color {
+    color: #ed6b39;
+}
+
+.header-title {
+    max-width: 200px;
+}
+
+.nav-bar {
+    float: right;
+    font-size: 25px;
+    padding-top: 70px;
+    font-weight: bold;
+}
+
+.nav-bar a:hover {
+    color: white;
+    animation-name: gradient-orange-to-white;
+    transition: 0.5s;
+}
+
+.nav-link {
+    padding-right: 30px;
+}
+
+a {
+    color: #ed6b39;
+    text-decoration: none;
+}
+
+.profile-image {
+    float: left;
+}
