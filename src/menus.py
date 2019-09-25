@@ -238,31 +238,24 @@ class RoundMenu(AbstractMenu):
     
     def create_new_round(self):
         self.ui.display_people_table()
-        people = self.accessor.get_people()
-        drinks = self.accessor.get_drinks()
         maker_id = self.get_user_number("Who is serving the round (please enter their id): ")
-        maker = people[int(maker_id)]
-        drinkers = []
+        maker, maker_drink = self.accessor.get_person(maker_id)
         orders = []
         while True:
             person_id = self.get_user_number("Enter ID of drinker. Press enter when you want to stop: ", True)
             if person_id  == "":
                 break
-            person = people[int(person_id)]
-            drinkers.append(person)
-            user_input = input(f"{person.name} usually has {person.prefered_drink}. Continue with this drink? (Y/N): ")
-            if user_input.upper() == "Y":
-                order = Order(person, person.prefered_drink)
-            elif user_input.upper() == "N":
+            person, drink = self.accessor.get_person(person_id)
+            user_input = input(f"{person.first_name} usually has {person.prefered_drink}. Continue with this drink? (Y/N): ")
+            order = Order(person, person.prefered_drink)
+            if user_input.upper() == "N":
                 drink_id = input("Please enter the drink id: ")
-                drink = drinks[drink_id]
+                drink = self.accessor.get_drink(drink_id)
                 order = Order(person, drink)
-            else:
-                print()
             orders.append(order)
-        current_round = Round(maker, orders)
-        self.accessor.set_current_round(current_round)
-        current_round.save_round(self.file_man)
+        new_round = Round(maker, orders)
+        queries.create_round_with_orders(new_round)
+        
 
     def create_new_round_from_previous(self):
         people = self.accessor.get_people()

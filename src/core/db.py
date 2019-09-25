@@ -24,17 +24,31 @@ def fetch_all_from_db(query):
     finally:
         connection.close()
 
-def execute_query(query):
+def fetch_one_from_db(query):
+    connection = get_db_connection()
+    try:
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(query)
+        return cursor.fetchone()
+    except Exception as e:
+        print (e)
+        return []
+    finally:
+        connection.close()
+
+def execute_query(query, hold_commit = False):
     connection = get_db_connection()
     try:
         cursor = connection.cursor()
         cursor.execute(query)
-        connection.commit()
+        if not hold_commit:
+            connection.commit()
     except Exception as e:
         print (e)
         return
     finally:
         connection.close()
+        return cursor.lastrowid
        
 
 def get_all_people():
@@ -83,5 +97,62 @@ def update_drink_preference(person_id, drink_id):
         WHERE person_id={person_id}
     """
     execute_query(query)
-   
-   
+
+def get_person_by_id(person_id):
+    query = f"""
+        SELECT
+            p.preferred_drink_id,
+            d.name AS drink_name,
+            p.first_name,
+            p.surname,
+            p.person_id
+        FROM
+            tbl_people AS p
+        LEFT JOIN
+            tbl_drinks AS d ON d.drink_id=p.preferred_drink_id
+        WHERE
+            p.person_id = {person_id}
+    """
+    return fetch_one_from_db(query)
+
+def get_drink_by_id(drink_id):
+    query = f"""
+        SELECT
+            d.drink_id,
+            d.drink_name
+        FROM
+            tbl_drinks AS d
+        WHERE
+            d.drink_id = {drink_id}
+    """
+    return fetch_one_from_db(query)
+
+def create_round_with_orders(round):
+    query = f"""
+        INSERT INTO 
+            tbl_rounds(maker_id, expiry_datetime)
+        VALUES 
+            ({round.maker.id}, NOW())
+
+    """
+    round_id = execute_query(query)
+    print(round_id)
+    create_orders(round.orders, round_id)
+    
+def create_orders(orders, round_id):
+    all_orders_string = ""
+    for index in range(0,len(orders)):
+        order = orders[index]
+        order_string = f"({round_id}, {order.person.id}, {order.drink.id})"
+        if index < len(orders)-1:
+            order_string += ","
+        print(order_string)
+        all_orders_string += order_string
+
+    query = f"""
+        INSERT INTO 
+            tbl_orders(round_id, person_id, drink_id)
+        VALUES
+            {all_orders_string}
+    """
+    execute_query(query)

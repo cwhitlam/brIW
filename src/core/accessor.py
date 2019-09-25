@@ -26,6 +26,21 @@ class Accessor:
             drinks[drink["drink_id"]] = drink_obj
         return drinks
 
+    def get_person(self, person_id):
+        result = queries.get_person_by_id(person_id)
+        drink = Drink(result["preferred_drink_id"], result["drink_name"])
+        person = Person(
+            result["person_id"], 
+            result["first_name"],
+            result["surname"], 
+            drink
+        )
+        return person, drink
+
+    def get_drink(self, drink_id):
+        result = queries.get_drink_by_id(drink_id)
+        return Drink(result["drink_id"], result["drink_name"])
+
     def set_people(self, people):
         self.people = people
 
