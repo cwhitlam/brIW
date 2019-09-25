@@ -17,4 +17,21 @@ class PersonHandler(BaseHTTPRequestHandler):
         people = acc.get_people_dict()
         json_encoded = json.dumps(people, cls=MyEncoder)
         self.wfile.write(json_encoded.encode("utf-8"))
+        
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        data = json.loads(self.rfile.read(content_length))
+
+        print(data)
+        if (data["preferred_drink_id"] == None):
+            data["preferred_drink_id"] == "NULL"
+
+        database.add_new_person(
+            data["first_name"], 
+            data["surname"],
+            data["preferred_drink_id"]
+        )       
+
+        self.send_response(201)
+        self.end_headers()
 

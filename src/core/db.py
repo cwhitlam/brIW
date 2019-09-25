@@ -14,8 +14,6 @@ def get_db_connection():
 
 def fetch_all_from_db(query):
     connection = get_db_connection()
-    #query = pymysql.escape_string(query)
-    #query = query.strip('\n')
     try:
         cursor = connection.cursor(pymysql.cursors.DictCursor)
         cursor.execute(query)
@@ -25,7 +23,20 @@ def fetch_all_from_db(query):
         return []
     finally:
         connection.close()
-        
+
+def execute_query(query):
+    connection = get_db_connection()
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        connection.commit()
+    except Exception as e:
+        print (e)
+        return
+    finally:
+        connection.close()
+       
+
 def get_all_people():
     query = """
                 SELECT 
@@ -34,9 +45,8 @@ def get_all_people():
                     pe.surname,
                     d.drink_id,
                     d.name AS drink_name
-                FROM people AS pe
-                LEFT JOIN preferences AS pr ON pe.person_id=pr.person_id
-                LEFT JOIN drinks AS d ON pr.drink_id=d.drink_id
+                FROM tbl_people AS pe
+                LEFT JOIN tbl_drinks AS d ON pe.preferred_drink_id=d.drink_id
             """
     return fetch_all_from_db(query)
 
@@ -45,8 +55,17 @@ def get_all_drinks():
                 SELECT 
                     drink_id,
                     name 
-                FROM drinks
+                FROM tbl_drinks
             """
     return fetch_all_from_db(query)
-   
-    
+
+def add_new_person(first_name, surname, preferred_drink_id):
+
+    if (preferred_drink_id == None):
+        preferred_drink_id = "NULL"
+
+    query = f"""
+        INSERT INTO tbl_people (first_name, surname, preferred_drink_id)
+        VALUES ('{first_name}','{surname}', {preferred_drink_id})
+    """
+    execute_query(query)

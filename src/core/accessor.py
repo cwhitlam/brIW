@@ -11,7 +11,9 @@ class Accessor:
         result = queries.get_all_people()
         people = {}
         for person in result:
-            drink_obj = Drink(person["drink_id"], person["drink_name"])
+            drink_obj = None
+            if (person["drink_id"] != None):
+                drink_obj = Drink(person["drink_id"], person["drink_name"])
             person_obj = Person(person["person_id"], person["first_name"], drink_obj)
             people[person["person_id"]] = person_obj
         return people
