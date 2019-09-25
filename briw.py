@@ -8,11 +8,6 @@ from src.core.drink import Drink
 from src.menus import MainMenu
 from src.core.accessor import Accessor
 
-def check_if_valid_command(command):
-    valid_commands = ["get-people", "get-drinks", "get-preferences"]
-    if command not in valid_commands:
-        raise Exception("Command not found, type -h for list of commands") 
-
 def main():
     file_man = File_Manager()
     accessor = Accessor(file_man)

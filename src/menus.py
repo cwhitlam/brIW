@@ -6,6 +6,7 @@ from src.core.person import Person
 from src.core.drink import Drink
 from src.core.round import Round, Order
 from src.ui.ui import UI
+import src.core.db as queries 
 
 class AbstractMenu(ABC):
     @abstractmethod
@@ -100,24 +101,15 @@ class MainMenu(AbstractMenu):
 class PeopleMenu(AbstractMenu):
     def __init__(self, accessor, file_man):
         super().__init__(accessor, file_man)
-    
-    def add_person(self, person):
-        people = self.accessor.get_people()
-        people[person.id] = person
-        self.accessor.set_people(people)
 
     def add_person_menu(self):
-        person_name = self.get_user_string("Who would you like to add?: ")
-        person_name = person_name.capitalize()
+        first_name = self.get_user_string("What is their first name?: ")
+        first_name = first_name.capitalize()
+        surname = self.get_user_string("What is their surname?: ")
+        surname = surname.capitalize()
         drink_id = self.get_user_number("What is the id of thier prefered drink? (leave blank if no preference): ", True)
-        prefered_drink = None
-        if drink_id != "":
-            prefered_drink = self.accessor.get_drinks()[drink_id]
-        new_id = self.accessor.get_new_id(self.accessor.get_people())
-        person = Person(new_id, person_name, prefered_drink)
-        self.add_person(person)
-        self.accessor.save_people()
-        print(f"{person.name} was successfully added")
+        queries.add_new_person(first_name, surname, drink_id)
+        print(f"{first_name} {surname} was successfully added")
 
     def show_menu(self):
         menu_text = """
@@ -161,20 +153,9 @@ class DrinksMenu(AbstractMenu):
         print(menu_text)
 
     def add_drink_menu(self):
-        drinks = self.accessor.get_drinks()
-        while True:
-            drink_name = self.get_user_string("What drink would you like to add?: ")
-            drink_name = drink_name.capitalize()
-            if drink_name not in drinks.values():
-                break
-            else:
-                self.print_error_message("Drink already in database, please enter a different drink or use the existing one")
-        
-        drink_id = self.accessor.get_new_id(drinks)
-        drink = Drink(drink_id, drink_name)
-        drinks[drink_id] = drink
-        json_rep = self.file_man.convert_to_json(drinks)
-        self.file_man.save_to_file(json_rep, "./src/stored_data/drinks.json")
+        drink_name = self.get_user_string("What drink would you like to add?: ")
+        drink_name = drink_name.capitalize()
+        queries.add_new_drink(drink_name)
         print(f"{drink_name} was successfully added")
 
     def handle_menu_choice(self, user_choice):
@@ -207,8 +188,6 @@ class PreferencesMenu(AbstractMenu):
         print(menu_text)
 
     def change_preference(self):
-        people = self.accessor.get_people()
-        drinks = self.accessor.get_drinks()
         user_input = ""
         while user_input == "":
             user_input = self.get_user_number("Please enter the person's ID or press enter to display current preferences: ", True)
@@ -220,13 +199,11 @@ class PreferencesMenu(AbstractMenu):
         while user_input == "":
             user_input = self.get_user_number("Please enter the drinks's ID or press enter to display current preferences: ", True)
             if user_input == "":
-                self.ui.display_preferences_table()
+                self.ui.display_drinks_table()
 
         drink_id = int(user_input)
-        prefered_drink = drinks[drink_id]
-        people[person_id].set_prefered_drink(prefered_drink)
-        self.accessor.set_people(people)
-        self.accessor.save_people()
+        queries.update_drink_preference(person_id, drink_id)
+        print("Preference updated")
 
     def handle_menu_choice(self, user_choice):
         if user_choice == 1:

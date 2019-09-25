@@ -7,18 +7,18 @@ class Accessor:
         self.current_round = None
         self.file_man = file_man
 
-    def get_people_dict(self):
+    def get_people(self):
         result = queries.get_all_people()
         people = {}
         for person in result:
             drink_obj = None
             if (person["drink_id"] != None):
                 drink_obj = Drink(person["drink_id"], person["drink_name"])
-            person_obj = Person(person["person_id"], person["first_name"], drink_obj)
+            person_obj = Person(person["person_id"], person["first_name"], person["surname"], drink_obj)
             people[person["person_id"]] = person_obj
         return people
 
-    def get_drinks_dict(self):
+    def get_drinks(self):
         result = queries.get_all_drinks()
         drinks = {}
         for drink in result:
@@ -60,7 +60,3 @@ class Accessor:
         except:
             print(f"No drink with id: {id}")
             quit()
-
-    def save_people(self):
-        json_rep = self.file_man.convert_to_json(self.get_people())
-        self.file_man.save_to_file(json_rep, "src/stored_data/people.json")

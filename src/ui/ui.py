@@ -5,7 +5,7 @@ class UI:
         self.accessor = accessor
 
     def display_people_table(self):
-        table = Table("PEOPLE", ["id", "name"], self.accessor.get_people())
+        table = Table("PEOPLE", ["id", "first_name", "surname"], self.accessor.get_people(), ["id", "firstname", "surname"])
         table.print_table()
 
     def display_drinks_table(self):
@@ -13,7 +13,7 @@ class UI:
         table.print_table()
     
     def display_preferences_table(self):
-        table = Table("PREFERENCES", ["name", "prefered_drink"], self.accessor.get_people(), ["name", "prefered_drink"])
+        table = Table("PREFERENCES", ["id", "full_name", "prefered_drink"], self.accessor.get_people(), ["id", "name", "prefered_drink"])
         table.print_table()
 
     def display_current_round(self):

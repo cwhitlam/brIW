@@ -5,7 +5,7 @@ import json
 from src.core.accessor import Accessor
 from src.api.encoder import MyEncoder
 
-class PersonHandler(BaseHTTPRequestHandler):
+class DrinkHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header("Content-type", "text/json")
@@ -14,7 +14,7 @@ class PersonHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self._set_headers()
         acc = Accessor()
-        people = acc.get_people()
+        people = acc.get_drinks_dict()
         json_encoded = json.dumps(people, cls=MyEncoder)
         self.wfile.write(json_encoded.encode("utf-8"))
         
@@ -33,8 +33,9 @@ class PersonHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 if __name__ == "__main__":
-    #Person Server
-    server_address = ("", 8080)
-    httpd = HTTPServer(server_address, PersonHandler)
-    print("Starting person server...")
+    #Drink Server
+    server_address = ("", 8081)
+    httpd = HTTPServer(server_address, DrinkHandler)
+    print("Starting drink server...")
     httpd.serve_forever()
+

@@ -69,3 +69,19 @@ def add_new_person(first_name, surname, preferred_drink_id):
         VALUES ('{first_name}','{surname}', {preferred_drink_id})
     """
     execute_query(query)
+
+def add_new_drink(drink_name):
+    query = f"""
+        INSERT INTO tbl_drinks (name)
+        VALUES ('{drink_name}')
+    """
+    execute_query(query)
+
+def update_drink_preference(person_id, drink_id):
+    query = f"""
+        UPDATE tbl_people SET preferred_drink_id = {drink_id} 
+        WHERE person_id={person_id}
+    """
+    execute_query(query)
+   
+   
