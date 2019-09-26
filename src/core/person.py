@@ -1,5 +1,5 @@
 class Person:
-    def __init__(self, id, first_name, surname, prefered_drink):
+    def __init__(self, id, first_name, surname, prefered_drink = None):
         self.id = id
         self.first_name = first_name
         self.surname = surname

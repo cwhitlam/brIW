@@ -36,5 +36,5 @@ if __name__ == "__main__":
     #Person Server
     server_address = ("", 8080)
     httpd = HTTPServer(server_address, RoundHandler)
-    print("Starting person server...")
+    print("Starting round server...")
     httpd.serve_forever()

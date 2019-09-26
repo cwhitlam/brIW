@@ -1,35 +1,94 @@
+body {
+    background-color: #2d2d2d;
+    color: white;
+    font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
+    margin: 0px 0px 0px 0px;
+}
+
 h1 {
-    color:white;
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 50px;
-    background-color: blueviolet;
+    color: #ed6b39;
+    font-size: 60px;
+    padding-left: 170px;
+}
+
+#iw-logo {
+    width: 50%;
+    margin-left: auto;
+    margin-right:auto;
+    display: block;
+    top:-20px;
+}
+
+.briw-logo {
+    max-width: 150px;
+    float: left;
+    padding-right: 0px;
+    transition: 0.5s;
+    position: absolute;
+    top: 25px;
+}
+
+.header {
+    background-color: #333F48;
+    padding: 15px 15px 0px 15px;
+    position: fixed;
+    min-width: 100%;
+    top: 0;
+}
+
+.content {
+    width: 80%;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 15px;
 }
 
 h2 {
-    color: purple;
-    font-size: 30px;
-}
-
-body {
-    background-image: url("https://media0.giphy.com/media/AGY8p0HH50mcg/giphy.gif?cid=790b7611f944ca86be91854275f5294fa0c9de4fc78c328c&rid=giphy.gifi");
-    /*background-image: url("https://media.giphy.com/media/10VxStkL959Ze0/giphy.gif");*/
-    background-repeat: repeat;
-}
-
-p {
-    font-size: 30px;
     color: white;
-    background-color:green;
-}
-
-#marqueediv {
-    background-color: cadetblue;
-    max-width: 540px;
+    font-size: 40px;
     text-align: center;
 }
 
-table {
-    font-size: 40px;
-    color: purple;
+h3 {
+    font-size: 30px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 10px;
+}
+
+.orange-color {
+    color: #ed6b39;
+}
+
+.header-title {
+    max-width: 200px;
+}
+
+.nav-bar {
+    float: right;
+    font-size: 25px;
+    padding-top: 70px;
+    font-weight: bold;
+}
+
+.nav-bar a:hover {
+    color: white;
+    animation-name: gradient-orange-to-white;
+    transition: 0.5s;
+}
+
+.nav-link {
+    padding-right: 30px;
+}
+
+a {
+    color: #ed6b39;
+    text-decoration: none;
+}
+
+.profile-image {
+    float: left;
 }

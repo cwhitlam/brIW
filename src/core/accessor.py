@@ -1,5 +1,6 @@
 from src.core.person import Person
 from src.core.drink import Drink
+from src.core.round import Round, Order
 import src.core.db as queries
 
 class Accessor:
@@ -48,10 +49,28 @@ class Accessor:
         self.drinks = drinks
 
     def get_current_round(self):
-        return self.current_round
+        round_result = queries.get_current_round()
+        if (round_result == None):
+            return
+        maker = Person(
+            round_result["maker_id"], 
+            round_result["first_name"], 
+            round_result["surname"], 
+        )
 
-    def set_current_round(self, current_round):
-        self.current_round = current_round
+        orders_result = queries.get_orders_by_round_id(round_result["round_id"])
+        orders = []
+        for order in orders_result:
+            drink = Drink(order["drink_id"], order["drink_name"])
+            person = Person(
+                order["person_id"], 
+                order["first_name"], 
+                order["surname"]
+            )
+            order_obj = Order(person, drink)
+            orders.append(order_obj)
+        
+        return Round(maker, round_result["minutes_remaining"], orders)
 
     def get_new_id(self, table):
         #if table is false. dictionary is empty, return 0 id for first item

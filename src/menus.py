@@ -240,6 +240,7 @@ class RoundMenu(AbstractMenu):
         self.ui.display_people_table()
         maker_id = self.get_user_number("Who is serving the round (please enter their id): ")
         maker, maker_drink = self.accessor.get_person(maker_id)
+        round_duration = self.get_user_number("How long until you make the drinks (in minutes)?: ")
         orders = []
         while True:
             person_id = self.get_user_number("Enter ID of drinker. Press enter when you want to stop: ", True)
@@ -253,7 +254,7 @@ class RoundMenu(AbstractMenu):
                 drink = self.accessor.get_drink(drink_id)
                 order = Order(person, drink)
             orders.append(order)
-        new_round = Round(maker, orders)
+        new_round = Round(maker, round_duration, orders)
         queries.create_round_with_orders(new_round)
         
 

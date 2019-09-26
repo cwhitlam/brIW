@@ -14,6 +14,7 @@ CREATE TABLE tbl_people (
 CREATE TABLE tbl_rounds (
     round_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     maker_id INTEGER NOT NULL,
+    created_datetime DATETIME NOT NULL,
     expiry_datetime DATETIME NOT NULL,
     FOREIGN KEY (maker_id) REFERENCES tbl_people(person_id)
 )

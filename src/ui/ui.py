@@ -22,5 +22,5 @@ class UI:
             print ("Currently no round")
             return
 
-        table = Table("CURRENT ROUND STARTED BY: " + current_round.maker.name, ["person", "drink"], current_round.orders)
+        table = Table("CURRENT ROUND STARTED BY: " + current_round.maker.full_name, ["person", "drink"], current_round.orders)
         table.print_table()
