@@ -4,7 +4,7 @@ class Round:
     def __init__(self, maker, round_duration, orders = []):
         self.maker  = maker
         self.orders = orders
-        self.round_duration = round_duration
+        self.minutes_remaining = round_duration
 
     def display_round_orders(self):
         print(self.orders) 

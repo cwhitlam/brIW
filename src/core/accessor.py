@@ -5,7 +5,6 @@ import src.core.db as queries
 
 class Accessor:
     def __init__(self, file_man =None):
-        self.current_round = None
         self.file_man = file_man
 
     def get_people(self):
@@ -29,7 +28,9 @@ class Accessor:
 
     def get_person(self, person_id):
         result = queries.get_person_by_id(person_id)
-        drink = Drink(result["preferred_drink_id"], result["drink_name"])
+        drink = None
+        if (result["preferred_drink_id"] != None):
+            drink = Drink(result["preferred_drink_id"], result["drink_name"])
         person = Person(
             result["person_id"], 
             result["first_name"],
@@ -41,12 +42,6 @@ class Accessor:
     def get_drink(self, drink_id):
         result = queries.get_drink_by_id(drink_id)
         return Drink(result["drink_id"], result["drink_name"])
-
-    def set_people(self, people):
-        self.people = people
-
-    def set_drinks(self, drinks):
-        self.drinks = drinks
 
     def get_current_round(self):
         round_result = queries.get_current_round()
@@ -71,26 +66,3 @@ class Accessor:
             orders.append(order_obj)
         
         return Round(maker, round_result["minutes_remaining"], orders)
-
-    def get_new_id(self, table):
-        #if table is false. dictionary is empty, return 0 id for first item
-        if bool(table):
-            current_highest_id = list(table.keys())[-1]
-            return current_highest_id + 1
-        else:
-            return 0
-
-    def get_person_name_by_id(self, id):
-        
-        try:
-            return self.people[id]
-        except:
-            print(f"No person has the id {id}")
-            quit()
-
-    def get_drink_name_by_id(self, id):
-        try:
-            return self.drinks[id]
-        except:
-            print(f"No drink with id: {id}")
-            quit()

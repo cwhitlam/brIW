@@ -119,7 +119,7 @@ def get_drink_by_id(drink_id):
     query = f"""
         SELECT
             d.drink_id,
-            d.drink_name
+            d.name AS drink_name
         FROM
             tbl_drinks AS d
         WHERE
@@ -132,7 +132,7 @@ def create_round_with_orders(round):
         INSERT INTO 
             tbl_rounds(maker_id, created_datetime, expiry_datetime)
         VALUES 
-            ({round.maker.id}, NOW(), NOW() + INTERVAL {round.round_duration} MINUTE)
+            ({round.maker.id}, NOW(), NOW() + INTERVAL {round.minutes_remaining} MINUTE)
 
     """
     round_id = execute_query(query)
@@ -146,7 +146,6 @@ def create_orders(orders, round_id):
         order_string = f"({round_id}, {order.person.id}, {order.drink.id})"
         if index < len(orders)-1:
             order_string += ","
-        print(order_string)
         all_orders_string += order_string
 
     query = f"""
@@ -164,15 +163,14 @@ def get_current_round():
             r.round_id,
             p.first_name,
             p.surname,
-            TIMESTAMPDIFF(MINUTE, r.expiry_datetime, r.created_datetime) AS minutes_remaining
+            r.expiry_datetime,
+            TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
         FROM
             tbl_rounds AS r 
         INNER JOIN
             tbl_people AS p ON p.person_id=r.maker_id
         WHERE
-            r.created_datetime < NOW()
-        AND
-            r.expiry_datetime > NOW()     
+            (NOW() < r.expiry_datetime)     
     """
     return fetch_one_from_db(query)
 

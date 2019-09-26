@@ -24,3 +24,4 @@ class UI:
 
         table = Table("CURRENT ROUND STARTED BY: " + current_round.maker.full_name, ["person", "drink"], current_round.orders)
         table.print_table()
+        print(f"{current_round.minutes_remaining} MINUTES LEFT TO ORDER")

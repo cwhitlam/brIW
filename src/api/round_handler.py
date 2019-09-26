@@ -33,7 +33,6 @@ class RoundHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 if __name__ == "__main__":
-    #Person Server
     server_address = ("", 8080)
     httpd = HTTPServer(server_address, RoundHandler)
     print("Starting round server...")

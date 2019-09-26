@@ -247,6 +247,13 @@ class RoundMenu(AbstractMenu):
             if person_id  == "":
                 break
             person, drink = self.accessor.get_person(person_id)
+            if (drink == None):
+                drink_id = input("Please enter the drink id of their chosen drink: ")
+                drink = self.accessor.get_drink(drink_id)
+                order = Order(person, drink)
+                orders.append(order)
+                continue
+
             user_input = input(f"{person.first_name} usually has {person.prefered_drink}. Continue with this drink? (Y/N): ")
             order = Order(person, person.prefered_drink)
             if user_input.upper() == "N":
