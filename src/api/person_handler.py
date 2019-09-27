@@ -5,35 +5,19 @@ import json
 from src.core.accessor import Accessor
 from src.api.encoder import MyEncoder
 
-class PersonHandler(BaseHTTPRequestHandler):
-    def _set_headers(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/json")
-        self.end_headers()
-
-    def do_GET(self):
-        self._set_headers()
+class PersonHandler():
+    def get(self):
         acc = Accessor()
         people = acc.get_people()
         json_encoded = json.dumps(people, cls=MyEncoder)
-        self.wfile.write(json_encoded.encode("utf-8"))
-        
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        data = json.loads(self.rfile.read(content_length))
+        return json_encoded
 
+    def post(self, data):
         database.add_new_person(
             data["first_name"], 
             data["surname"],
             data["preferred_drink_id"]
-        )       
-        
-        self.send_response(201)
-        self.end_headers()
+        )      
 
-if __name__ == "__main__":
-    #Person Server
-    server_address = ("0.0.0.0", 8080)
-    httpd = HTTPServer(server_address, PersonHandler)
-    print("Starting person server...")
-    httpd.serve_forever()
+        
+
