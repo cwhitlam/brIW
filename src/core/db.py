@@ -63,6 +63,8 @@ def get_all_people():
                     tbl_people AS pe
                 LEFT JOIN 
                     tbl_drinks AS d ON pe.preferred_drink_id=d.drink_id
+                ORDER BY
+                    pe.person_id ASC
             """
     return fetch_all_from_db(query)
 
