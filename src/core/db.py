@@ -59,8 +59,10 @@ def get_all_people():
                     pe.surname,
                     d.drink_id,
                     d.name AS drink_name
-                FROM tbl_people AS pe
-                LEFT JOIN tbl_drinks AS d ON pe.preferred_drink_id=d.drink_id
+                FROM 
+                    tbl_people AS pe
+                LEFT JOIN 
+                    tbl_drinks AS d ON pe.preferred_drink_id=d.drink_id
             """
     return fetch_all_from_db(query)
 
