@@ -178,6 +178,42 @@ def get_current_round():
     """
     return fetch_one_from_db(query)
 
+def get_num_of_orders_for_round(round_id):
+    query = f"""
+        SELECT 
+            COUNT(*) AS num_of_orders
+        FROM
+            tbl_orders as o
+        WHERE
+            (o.round_id = {round_id})
+    """
+    result = fetch_one_from_db(query)
+    return result["num_of_orders"]
+
+
+def get_rounds():
+    query = f"""
+        select 
+            concat(p.first_name, ' ' , p.surname) as maker_fullname,
+            r.round_id,
+            r.expiry_datetime,
+            timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining
+        from
+            tbl_rounds as r 
+        inner join
+            tbl_people as p on p.person_id=r.maker_id
+    """
+    result = fetch_all_from_db(query)
+    
+    for index in range(0, len(result)):
+        round = result[index]
+        round["num_of_orders"] = get_num_of_orders_for_round(round["round_id"])
+        result[index] = round 
+
+    if result == None:
+        return []
+    return result   
+
 def get_orders_by_round_id(round_id):
     query = f"""
         SELECT 

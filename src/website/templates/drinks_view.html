@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./static/css/main.css">
+    </head>
+    <body>
+        <form method="POST">
+            <label for="drink_name">Drink Name</label>
+            <input name="drink_name" type="text" placeholder="Coffee">
+        </form>
+
+        {% if drink_name %}
+        <h1>{{drink_name}} was added</h1>
+        {% endif %}
+    </body>
+</html>

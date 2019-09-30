@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Rounds{% endblock %}
+{% block content %}
+<h2>Current Rounds</h2>
+<table>
+    <tr>
+        <th>Round Maker</th>
+        <th>Number of Orders</th>
+        <th>Expires in</th>
+        <th></th>
+    </tr>
+    {% for round in rounds %}
+        <tr>
+            <td>{{round.maker_fullname}}</td>
+            <td>{{round.num_of_orders}}</td>
+            <td>{{round.minutes_remaining}} mins</td>
+            <td>Join</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
