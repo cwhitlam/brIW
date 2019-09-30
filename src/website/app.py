@@ -14,15 +14,18 @@ def homepage():
 
 @app.route('/drinks', methods=["GET", "POST"])
 def drinks_page():
+
     if request.method == "GET":
         return render_template('drinks_view.html')
     elif request.method == "POST":
-        drink_name = request.form.get("drink_name")
+        drink_name = request.form.get("drink_name").strip()
+        #if (drink_name != ""):
+            #database.add_new_drink(drink_name)
         return render_template('drinks_view.html', drink_name=drink_name)
     else:
         return "Invalid HTTP method"
 
-@app.route('/rounds', methods=["GET", "POST"])
+@app.route('/rounds', methods=["GET"])
 def rounds_page():
     if request.method == "GET":
         rounds = database.get_rounds()

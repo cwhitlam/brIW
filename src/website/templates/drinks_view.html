@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="./static/css/main.css">
-    </head>
-    <body>
-        <form method="POST">
-            <label for="drink_name">Drink Name</label>
-            <input name="drink_name" type="text" placeholder="Coffee">
-        </form>
+{% extends "layout.html" %}
+{% block title %}Rounds{% endblock %}
+{% block content %}
+<h2>Add a drink</h2>
+<form method="POST" onsubmit="event.preventDefault(); validateFormInput();">
+    <label for="drink_name">Drink Name</label>
+    <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
+    <input type="submit" value="Submit">
+</form>
 
-        {% if drink_name %}
-        <h1>{{drink_name}} was added</h1>
-        {% endif %}
-    </body>
-</html>
+<span id="js-error-message" class="error-message">Please enter a valid string</span>
+
+{% if drink_name %}
+    <h1>{{drink_name}} was added</h1>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="./static/js/drinks_page.js"></script>
+{% endblock %}

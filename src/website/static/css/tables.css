@@ -1,3 +1,36 @@
 table {
     width: 100%;
 }
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--orange-highlight);
+    color: white;
+    font-size: 20px;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--grey-highlight);
+}
+
+table td {
+    font-size: 20px;
+    height: 50px;
+}
+
+.view-btn div {
+    background-color: var(--teal-highlight);
+    text-align: center;
+    height:100%;
+    width: 100%;
+    color: var(--text-color);
+}
+
+.order-btn div {
+    background-color: var(--green-highlight);
+    text-align: center;
+    width: 100%;
+    height:100%;
+    color: var(--text-color);
+}

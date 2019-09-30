@@ -2,20 +2,37 @@
 {% block title %}Rounds{% endblock %}
 {% block content %}
 <h2>Current Rounds</h2>
+{% if rounds %}
 <table>
     <tr>
-        <th>Round Maker</th>
-        <th>Number of Orders</th>
-        <th>Expires in</th>
+        <th>&nbsp;Round Maker</th>
+        <th>&nbsp;Number of Orders</th>
+        <th>&nbsp;Expires in</th>
+        <th></th>
         <th></th>
     </tr>
     {% for round in rounds %}
         <tr>
-            <td>{{round.maker_fullname}}</td>
-            <td>{{round.num_of_orders}}</td>
-            <td>{{round.minutes_remaining}} mins</td>
-            <td>Join</td>
+            <td>&nbsp;{{round.maker_fullname}}</td>
+            <td>&nbsp;{{round.num_of_orders}}</td>
+            <td>&nbsp;{{round.minutes_remaining}} mins</td>
+            <td>
+                <a href="#" class="order-btn">
+                    <div>Order</div>
+                </a>
+            </td>
+            <td>
+                <a href="#" class="view-btn">
+                    <div>View</div>
+                </a>
+            </td>
         </tr>
     {% endfor %}
 </table>
+{% else %}
+<h3>Currently there are no rounds</h3>
+{% endif %}
+<div class="button">
+    <a href="/rounds">CREATE A ROUND</a>
+</div>
 {% endblock %}
