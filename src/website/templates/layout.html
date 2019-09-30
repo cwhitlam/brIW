@@ -2,7 +2,7 @@
 <html>
   <head>
     {% block head %}
-    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="/static/css/main.css" />
     <link rel="icon" href="./static/img/briw-logo.png">
     <title>BrIW - {% block title %}{% endblock %}</title>
@@ -12,12 +12,20 @@
     <div id="header">
         {% block header %}
             <a href="https://www.infinityworks.com"><img id="iw-logo" src="https://www.infinityworks.com/user/themes/infinity-works/images/site-logo-white.svg"></a>
-            <a href="/"><img class="briw-logo" src="./static/img/briw-logo.png"></a>
-            <div class="nav-bar">
+            <a href="/"><img id="briw-logo" src="./static/img/briw-logo.png"></a>
+            <img id="menu-icon" src="./static/img/menu-icon.png">
+            <div id="main-title">
+              <h1><a href="/">BrIW</a></h1>
+            </div>
+            <div id="nav-bar">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/account" class="nav-link">My Account</a>
+                <a href="/rounds" class="nav-link">Rounds</a>
+                <a href="/people" class="nav-link">People</a>
                 <a href="/drinks" class="nav-link">Drinks</a>
+                <a href="/leaderboards" class="nav-link">Leaderboards</a>
                 <a href="https://github.com/cwhitlam/brIW" class="nav-link">Contribute</a>
-            </div>   
-            <h1><a href="/">BrIW</a></h1>
+            </div>
         {% endblock %}
     </div>
     <div id="content">{% block content %}{% endblock %}</div>

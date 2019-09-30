@@ -28,7 +28,19 @@ def drinks_page():
 @app.route('/rounds', methods=["GET"])
 def rounds_page():
     if request.method == "GET":
-        rounds = database.get_rounds()
+        #rounds = database.get_rounds()
+        rounds = [
+            {
+                "maker_fullname": "Greg Ford",
+                "num_of_orders": 3,
+                "minutes_remaining": 10
+            },
+            {
+                "maker_fullname": "Chris Whitlam",
+                "num_of_orders": 5,
+                "minutes_remaining": 20
+            }
+        ]
         print(rounds)
         return render_template('rounds_view.html', rounds=rounds)
     else:
