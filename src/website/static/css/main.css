@@ -4,10 +4,35 @@
 @import "mobile.css";
 
 body {
-    background-color: var(--main-bg-color);
+    /*background-color: var(--main-bg-color);*/
     color: var(--text-color);
     font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
     margin: 0px;
+    overflow: hidden;
+}
+
+.scrolling-background {
+    min-width: 100%;
+    min-height: 100%;
+    background: url(/static/img/coffee_bean_background.jpg);
+    background-repeat: repeat;
+    animation: scroll 60s linear infinite;
+    position: absolute;
+    background-position: 0,0;
+    background-size: auto 100%;
+    background-attachment: scroll;
+    z-index: -20;
+    top: 0;
+    left: 0;
+}
+
+@keyframes scroll {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 500px;
+    }
 }
 
 #main-title {
@@ -52,8 +77,11 @@ body {
 
 #content {
     margin-top: 250px;
-    padding-left: 20%;
-    padding-right: 20%;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 15px;
+    background-color: var(--grey-highlight);
+    border-radius: 25px;
 }
 
 #page-title {
