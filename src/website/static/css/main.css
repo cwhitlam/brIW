@@ -62,9 +62,14 @@ body {
     position: absolute;
     right: 50px;
     top: 50px;
-    width: 80px;
+    width: 100px;
+    height: 50px;
     background-color: var(--grey-highlight);
     border: none;
+}
+
+#menu-icon img {
+    width: 80%;
 }
 
 #header {
@@ -130,6 +135,10 @@ h3 {
 
 .nav-link {
     padding-left: 20px;
+}
+
+.nav-link img {
+    width: 20px;
 }
 
 #nav-bar a:hover {

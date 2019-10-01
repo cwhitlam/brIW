@@ -1,4 +1,4 @@
-@media only screen and (max-width:700px) {
+@media only screen and (max-width:600px) {
     #briw-logo {
         max-width: 70px!important;
     }
@@ -48,5 +48,12 @@
 
     #nav-bar {
         display: none;
+    }
+
+    .nav-link {
+        margin-left:20%!important;
+        margin-right:20%!important;
+        padding-bottom: 10px;
+        font-size: 20px;
     }
 }
