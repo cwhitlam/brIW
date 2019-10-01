@@ -1,0 +1,7 @@
+---
+- hosts: ec2
+  tasks:
+        - name: Install Python
+          apt: name=python3 state=latest update_cache=yes
+          become: yes
+
