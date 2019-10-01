@@ -4,11 +4,10 @@
 @import "mobile.css";
 
 body {
-    /*background-color: var(--main-bg-color);*/
+    background-color: var(--main-bg-color);
     color: var(--text-color);
     font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
     margin: 0px;
-    overflow: hidden;
 }
 
 .scrolling-background {
@@ -37,7 +36,7 @@ body {
 
 #main-title {
     color: var(--orange-highlight);
-    font-size: 30px;
+    font-size: 25px;
     max-width: 100px;
     margin-left:130px;
 }
@@ -61,9 +60,11 @@ body {
 
 #menu-icon {
     position: absolute;
-    right: 15px;
-    top: 40%;
-    width: 50px;
+    right: 50px;
+    top: 50px;
+    width: 80px;
+    background-color: var(--grey-highlight);
+    border: none;
 }
 
 #header {
@@ -71,14 +72,23 @@ body {
     position: fixed;
     min-width: 100%;
     top: 0;
-    min-height: 15%;
     padding-top: 15px;
+    max-height: 20%;
+    border-bottom: 5px solid var(--black-highlight);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#header-content {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #content {
+    width: 50%;
     margin-top: 250px;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 15px;
     background-color: var(--grey-highlight);
     border-radius: 25px;
@@ -97,11 +107,10 @@ h3 {
 }
 
 #footer {
+    width: 90%;
     text-align: center;
     font-size: 10px;
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 30px auto 30px auto;
 }
 
 .orange-color {
@@ -120,7 +129,7 @@ h3 {
 }
 
 .nav-link {
-    padding: 20px;
+    padding-left: 20px;
 }
 
 #nav-bar a:hover {

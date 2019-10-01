@@ -1,8 +1,7 @@
 .button {
-    width: 300px;
-    margin: auto;
+    width: 100%;
     text-align: center;
-    padding: 30px;
+    margin: 50px auto 50px auto;
 }
 .button a {
     text-decoration: none;

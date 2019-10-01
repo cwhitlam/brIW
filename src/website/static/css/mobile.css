@@ -13,8 +13,8 @@
     }
     
     #menu-icon {
-        top: 25%!important;
-        right: 15px!important;
+        top: 50px!important;
+        right: 20px!important;
         width: 50px!important;
     }
 
@@ -31,7 +31,22 @@
     }
 
     #content {
-        padding-left: 5%!important;
-        padding-right: 5%!important;
+        margin-left: auto!important;
+        margin-right: auto!important;
+        margin-top: 150px!important;
+        width: 80%!important;
+    }
+
+    .scrolling-background {
+        width: 100%!important
+    }
+
+    .button a {
+        font-size: 20px!important;
+
+    }
+
+    #nav-bar {
+        display: none;
     }
 }

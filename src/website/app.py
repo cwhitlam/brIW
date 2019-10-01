@@ -14,7 +14,6 @@ def homepage():
 
 @app.route('/drinks', methods=["GET", "POST"])
 def drinks_page():
-
     if request.method == "GET":
         return render_template('drinks_view.html')
     elif request.method == "POST":
@@ -28,7 +27,8 @@ def drinks_page():
 @app.route('/rounds', methods=["GET"])
 def rounds_page():
     if request.method == "GET":
-        #rounds = database.get_rounds()
+        rounds = database.get_rounds()
+        """
         rounds = [
             {
                 "maker_fullname": "Greg Ford",
@@ -41,7 +41,7 @@ def rounds_page():
                 "minutes_remaining": 20
             }
         ]
-        print(rounds)
+        """
         return render_template('rounds_view.html', rounds=rounds)
     else:
         return "Invalid HTTP method"

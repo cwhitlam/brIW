@@ -11,12 +11,16 @@
   <body>
     <div id="header">
         {% block header %}
+          <div id="header-content">
             <a href="https://www.infinityworks.com"><img id="iw-logo" src="https://www.infinityworks.com/user/themes/infinity-works/images/site-logo-white.svg"></a>
             <a href="/"><img id="briw-logo" src="./static/img/briw-logo.png"></a>
-            <img id="menu-icon" src="./static/img/menu-icon.png">
+            <button id="menu-icon" >
+                <img src="./static/icons/bars.svg"/>
+            </button>
             <div id="main-title">
               <h1><a href="/">BrIW</a></h1>
             </div>
+          </div>
             <div id="nav-bar">
                 <a href="/" class="nav-link">Home</a>
                 <a href="/account" class="nav-link">My Account</a>
@@ -28,13 +32,14 @@
             </div>
         {% endblock %}
     </div>
-
-    <div id="content"><div class="scrolling-background"></div>{% block content %}{% endblock %}</div>
+    <div id="content"><!--<div class="scrolling-background"></div>-->{% block content %}{% endblock %}</div>
     <div id="footer">
       {% block footer %}
         BrIW and all its copyright interlectual property are protected under copyright Infinity Works and Henry Bushell (apparently)
       {% endblock %}
     </div>
-    {% block scripts %}{% endblock %}
+    <script type="text/javascript" src="./static/js/header.js"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>

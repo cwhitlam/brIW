@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Rounds{% endblock %}
 {% block content %}
-<h2>Add a drink</h2>
-<form method="POST" onsubmit="event.preventDefault(); validateFormInput();">
+<h2 id="page-title">Add a Drink</h2>
+<form id="js-drink-form" method="POST" onsubmit="event.preventDefault(); validateFormInput();">
     <label for="drink_name">Drink Name</label>
     <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
     <input type="submit" value="Submit">
