@@ -2,6 +2,9 @@
 {% block title %}Rounds{% endblock %}
 {% block content %}
 <h2 id="page-title">Current Rounds</h2>
+<div class="button">
+    <a href="/rounds">CREATE A ROUND</a>
+</div>
 {% if rounds %}
 <table>
     <tr>
@@ -32,7 +35,4 @@
 {% else %}
 <h3>Currently there are no rounds</h3>
 {% endif %}
-<div class="button">
-    <a href="/rounds">CREATE A ROUND</a>
-</div>
 {% endblock %}

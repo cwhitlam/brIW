@@ -28,7 +28,7 @@ def drinks_page():
 def rounds_page():
     if request.method == "GET":
         rounds = database.get_rounds()
-        """
+        
         rounds = [
             {
                 "maker_fullname": "Greg Ford",
@@ -41,10 +41,10 @@ def rounds_page():
                 "minutes_remaining": 20
             }
         ]
-        """
+        
         return render_template('rounds_view.html', rounds=rounds)
     else:
         return "Invalid HTTP method"
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)

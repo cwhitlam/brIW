@@ -78,7 +78,7 @@ body {
     min-width: 100%;
     top: 0;
     padding-top: 15px;
-    max-height: 20%;
+    min-height: 15%;
     border-bottom: 5px solid var(--black-highlight);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -104,7 +104,6 @@ body {
     font-size: 40px;
     text-align: center;
     margin: auto;
-    padding-bottom: 20px;
 }
 
 h3 {
