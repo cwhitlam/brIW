@@ -16,6 +16,7 @@ input[type=text], input[type=number], select {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 20px;
+    cursor: pointer;
 }
 
 textarea {
@@ -28,6 +29,7 @@ textarea {
     box-sizing: border-box;
     font-size: 15px;
     resize: none;
+
 }
 
 input[type=submit] {
