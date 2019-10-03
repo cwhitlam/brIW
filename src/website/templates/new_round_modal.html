@@ -3,14 +3,21 @@
 {% set modal_id = "js-create-round-modal" %}
 {% block modal_body %}
     <form>
-        <label for="maker_id">Who's round is it?</label>
-        <select name="maker_id">
-            <option value="">Select the round maker</option>
-            {% for person in people %}
-                <option value="{{person.id}}">{{person.full_name}}</option>
-            {% endfor %}
-        </select>
-        <label for="round_duration">How long will you be taking orders (min)</label>
-        <input type="number" name="round_duration"/>
+        <div class="form-element">
+            <label for="maker_id">Who's round is it?</label>
+            <select name="maker_id">
+                <option value="" disabled selected>Select the round maker</option>
+                {% for person in people %}
+                    <option value="{{person.id}}">{{person.full_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-element">
+            <label for="round_duration">How long will you be taking orders (min)</label>
+            <input type="number" name="round_duration"/>
+        </div>
+        <div class="form-element">
+            <input class="button-main" type="submit" value="Start Round">
+        </div>
     </form>
 {% endblock %}

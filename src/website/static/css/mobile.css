@@ -61,4 +61,12 @@
     #header {
         min-height: 10%!important;
     }
+
+    form {
+        font-size: 15px;
+    }
+
+    select {
+        font-size: 15px;
+    }
 }

@@ -1,20 +1,22 @@
 {% extends "layout.html" %}
 {% block title %}Rounds{% endblock %}
+{% set page_title = round.maker_fullname + "'s Round" %}
 {% block content %}
-    <h2 id="page-title">{{round.maker_fullname}}'s Round</h2>
-    {% if round.orders %}
-        {% for drink_name, orders in round.orders.items() %}
-            <button class="button-list">
-                {{drink_name}} ({{orders|length}})
-            </button>
-            {% for order in orders %}
-                <input type="checkbox">&nbsp;{{order.fullname}}
+    <div class="content-block">
+        {% if round.orders %}
+            {% for drink_name, orders in round.orders.items() %}
+                <button class="button-list">
+                    {{drink_name}} ({{orders|length}})
+                </button>
+                {% for order in orders %}
+                    <input type="checkbox">&nbsp;{{order.fullname}}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    {% else %}
-    <h3>Currently there are no orders</h3>
-    {% endif %}
-    <div class="button-main">
-        <a href="/rounds">ADD ORDER</a>
+        {% else %}
+        <h3>Currently there are no orders</h3>
+        {% endif %}
+        <div class="button-main">
+            <a href="/rounds">ADD ORDER</a>
+        </div>
     </div>
 {% endblock %}

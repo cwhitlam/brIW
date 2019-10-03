@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, render_template
 from src.api.person_handler import PersonHandler
 from src.api.drink_handler import DrinkHandler
-import src.core.db as database
+import src.core.db_mock as database
 
 app = Flask(__name__)
 

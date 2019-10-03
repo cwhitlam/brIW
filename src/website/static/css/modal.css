@@ -11,9 +11,14 @@
     background-color: rgba(0,0,0,0.4);
 }
 
+.modal-title {
+    font-size: 20px;
+    text-align: left;
+}
+
 .modal-header {
     padding: 2px 16px;
-    background-color: var(--black-highlight);
+    background-color: var(--main-bg-color);
     color: white;
 }
   
@@ -22,14 +27,12 @@
     color: black;
 }
   
-.modal-footer {
-    padding: 2px 16px;
-    background-color: var(--black-highlight);
-    color: white;
-}
-
 .modal-content {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     background-color: #fefefe;
     margin: auto;
     padding: 0;
@@ -41,6 +44,7 @@
 }
 
 .close {
+    margin-top: 5px;
     color: #aaa;
     float: right;
     font-size: 40px;
@@ -49,12 +53,12 @@
   
 .close:hover,
 .close:focus {
-    color: black;
+    color:var(--orange-highlight);
     text-decoration: none;
     cursor: pointer;
 }
 
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+    to {top: 50%; opacity: 1}
 }
