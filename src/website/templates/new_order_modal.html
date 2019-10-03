@@ -1,0 +1,32 @@
+{% extends "modal_template.html" %}
+{% set modal_title = "New Order" %}
+{% set modal_id = "js-create-order-modal" %}
+{% block modal_body %}
+    <form>
+        <div class="form-element">
+            <label for="person_id">Who's the drink for?</label>
+            <select name="person_id">
+                <option value="" disabled selected>Please select a person...</option>
+                {% for person in people %}
+                    <option value="{{person.id}}">{{person.full_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-element">
+            <label for="drink_id">What drink would they like?</label>
+            <select name="drink_id">
+                <option value="" disabled selected>Please select a drink...</option>
+                {% for person in people %}
+                    <option value="{{drink.id}}">{{drink.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-element">
+            <label for="special_requests">Any special requests?</label>
+            <textarea name="special_requests" placeholder="2 sugars"></textarea>
+        </div>
+        <div class="form-element">
+            <input class="button-main" type="submit" value="Place Order">
+        </div>
+    </form>
+{% endblock %}

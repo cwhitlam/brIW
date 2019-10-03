@@ -15,8 +15,12 @@
         {% else %}
         <h3>Currently there are no orders</h3>
         {% endif %}
-        <div class="button-main">
-            <a href="/rounds">ADD ORDER</a>
+        <div id="js-create-order-btn" class="button-main">
+            <button onclick="">Order a Drink</button>
         </div>
     </div>
+{% include "new_order_modal.html" %}
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="/static/js/orders_view.js"></script>
 {% endblock %}
