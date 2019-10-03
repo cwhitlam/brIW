@@ -1,9 +1,9 @@
-.button {
+.button-main {
     width: 100%;
     text-align: center;
     margin: 50px auto 50px auto;
 }
-.button a {
+.button-main a {
     text-decoration: none;
     background-color: var(--orange-highlight);
     color: var(--text-color);
@@ -13,5 +13,24 @@
     margin: auto;
     font-size: 30px;
     padding: 10px;
+}
+
+.button-list {
+    width: 100%;
+    text-align: center;
+    margin: 15px auto 15px auto;
+    padding: 5px 0px 5px 0px;
+    background-color: var(--black-highlight);
+    color: var(--text-color);
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.button-list:hover {
+    background-color:  var(--orange-highlight);
+    color: white;
 }
 

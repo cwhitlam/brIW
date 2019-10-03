@@ -1,16 +1,18 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
+{% set page_title = "Welcome!" %}
 {% block content %}
-    <h2 id="page-title">Welcome!</h2>
-    <h3>What is <span class="orange-color">BrIW?</span></h3>
-    <p>
-        BrIW is a bespoke application for offering drinks to your co-workers!</br>
-        BrIW is currently in development and so is not fully released yet. Why not get involved and contribute!
-    </p>
-    <div class="button">
-        <a href="/rounds">CREATE A ROUND</a>
-    </div>
-    <div class="button">
-        <a href="/rounds">JOIN A ROUND</a>
+    <div class="content-block">
+        <h3>What is <span class="orange-color">BrIW?</span></h3>
+        <p>
+            BrIW is a bespoke application for offering drinks to your co-workers!</br>
+            BrIW is currently in development and so is not fully released yet. Why not get involved and contribute!
+        </p>
+        <div class="button-main">
+            <a href="/rounds">CREATE A ROUND</a>
+        </div>
+        <div class="button-main">
+            <a href="/rounds">JOIN A ROUND</a>
+        </div>
     </div>
 {% endblock %}

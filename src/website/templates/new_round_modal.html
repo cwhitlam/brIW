@@ -1,0 +1,16 @@
+{% extends "modal_template.html" %}
+{% set modal_title = "New Round" %}
+{% set modal_id = "js-create-round-modal" %}
+{% block modal_body %}
+    <form>
+        <label for="maker_id">Who's round is it?</label>
+        <select name="maker_id">
+            <option value="">Select the round maker</option>
+            {% for person in people %}
+                <option value="{{person.id}}">{{person.full_name}}</option>
+            {% endfor %}
+        </select>
+        <label for="round_duration">How long will you be taking orders (min)</label>
+        <input type="number" name="round_duration"/>
+    </form>
+{% endblock %}

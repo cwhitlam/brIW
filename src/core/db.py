@@ -57,6 +57,7 @@ def get_all_people():
                     pe.person_id,
                     pe.first_name,
                     pe.surname,
+                    CONCAT(pe.first_name, ' ', pe.surname) AS full_name,
                     d.drink_id,
                     d.name AS drink_name
                 FROM 
@@ -220,6 +221,7 @@ def get_orders_by_round_id(round_id):
             o.person_id,
             p.first_name,
             p.surname,
+            CONCAT(p.first_name, ' ' , p.surname) AS fullname,
             o.drink_id,
             d.name AS drink_name
         FROM 
@@ -233,3 +235,25 @@ def get_orders_by_round_id(round_id):
     """
 
     return fetch_all_from_db(query)
+
+def get_round_by_round_id(round_id):
+    query = f"""
+        SELECT
+            CONCAT(p.first_name, ' ' , p.surname) as maker_fullname,
+            r.round_id,
+            timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining
+        FROM
+            tbl_rounds as r 
+        INNER JOIN
+            tbl_people as p on p.person_id=r.maker_id
+        WHERE 
+            r.round_id = {round_id}
+    """
+    result = fetch_one_from_db(query)
+    
+    if result == None:
+        return []
+
+    result["orders"] = get_orders_by_round_id(result["round_id"])
+    return result   
+  

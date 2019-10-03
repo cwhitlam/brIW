@@ -4,7 +4,7 @@
     {% block head %}
     <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="/static/css/main.css" />
-    <link rel="icon" href="./static/img/briw-logo.png">
+    <link rel="icon" href="/static/img/briw-logo.png">
     <title>BrIW - {% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
@@ -13,9 +13,9 @@
         {% block header %}
           <div id="header-content">
             <a href="https://www.infinityworks.com"><img id="iw-logo" src="https://www.infinityworks.com/user/themes/infinity-works/images/site-logo-white.svg"></a>
-            <a href="/"><img id="briw-logo" src="./static/img/briw-logo.png"></a>
+            <a href="/"><img id="briw-logo" src="/static/img/briw-logo.png"></a>
             <button id="menu-icon" onclick="handleMenuClick()">
-                <img src="./static/icons/bars.svg"/>
+                <img src="/static/icons/bars.svg"/>
             </button>
             <div id="main-title">
               <h1><a href="/">BrIW</a></h1>
@@ -46,7 +46,11 @@
             </div>
         {% endblock %}
     </div>
-    <div id="content"><!--<div class="scrolling-background"></div>-->{% block content %}{% endblock %}</div>
+    <div id="content">
+      <h1 id="page-title">{{ page_title }}</h1>
+      <!--<div class="scrolling-background"></div>-->
+      {% block content %}{% endblock %}
+    </div>
     <div id="footer">
       {% block footer %}
         BrIW and all its copyright interlectual property are protected under copyright Infinity Works and Henry Bushell (apparently)

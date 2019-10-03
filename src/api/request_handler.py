@@ -13,7 +13,7 @@ def people():
         try:
             post(content)
             return Response(status=201)
-        except:
+        except Exception as e:
             return Response(status=422)
     else:
         return "Invalid HTTP method"
@@ -28,14 +28,14 @@ def drinks():
         try:
             post(content)
             return Response(status=201)
-        except:
+        except Exception as e:
             return Response(status=422)
     else:
         return "Invalid HTTP method"
 
 
 if __name__ == "__main__":
-    host="localhost"
+    host="0.0.0.0"
     port="8000"
 
     app.run(host=host, port=port, debug=True)

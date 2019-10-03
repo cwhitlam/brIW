@@ -31,19 +31,20 @@
     }
 
     #content {
-        margin-left: auto!important;
-        margin-right: auto!important;
         margin-top: 150px!important;
-        width: 80%!important;
+        max-width: 80%!important;
     }
 
     .scrolling-background {
         width: 100%!important
     }
 
-    .button a {
+    .button-main a {
         font-size: 20px!important;
-
+    }
+    
+    .button-list a {
+        font-size: 20px!important;
     }
 
     #nav-bar {

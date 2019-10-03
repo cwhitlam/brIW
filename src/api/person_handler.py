@@ -13,12 +13,11 @@ class PersonHandler():
         return json_encoded
 
     def post(self, data):
-        print("test")
         database.add_new_person(
             data["first_name"], 
             data["surname"],
             data["preferred_drink_id"]
         )      
 
-        
+    
 

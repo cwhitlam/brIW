@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="/static/css/modal.css" />
+<div id="{{ modal_id }}" class="modal">
+<div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>{{ modal_title }}</h2>
+    </div>
+    <div class="modal-body">
+        {% block modal_body %}
+        {% endblock %}
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+</div>

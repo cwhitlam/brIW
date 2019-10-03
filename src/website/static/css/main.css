@@ -8,6 +8,7 @@ body {
     color: var(--text-color);
     font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
     margin: 0px;
+    font-size: 20px;
 }
 
 .scrolling-background {
@@ -90,10 +91,13 @@ body {
 }
 
 #content {
-    width: 50%;
+    max-width: 50%;
     margin-top: 250px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.content-block {
     padding: 15px;
     background-color: var(--grey-highlight);
     border-radius: 25px;
@@ -107,7 +111,8 @@ body {
 }
 
 h3 {
-    font-size: 30px;
+    font-size: 20px;
+    text-align: center;
 }
 
 #footer {
@@ -129,7 +134,7 @@ h3 {
     font-size: 25px;
     font-weight: bold;
     text-align: center;
-    background-color: var(--black-highlight)
+    background-color: var(--black-highlight);
 }
 
 .nav-link {

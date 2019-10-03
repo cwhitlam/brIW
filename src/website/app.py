@@ -28,23 +28,29 @@ def drinks_page():
 def rounds_page():
     if request.method == "GET":
         rounds = database.get_rounds()
-        
-        rounds = [
-            {
-                "maker_fullname": "Greg Ford",
-                "num_of_orders": 3,
-                "minutes_remaining": 10
-            },
-            {
-                "maker_fullname": "Chris Whitlam",
-                "num_of_orders": 5,
-                "minutes_remaining": 20
-            }
-        ]
-        
-        return render_template('rounds_view.html', rounds=rounds)
+        people = database.get_all_people()
+        print(people)
+        return render_template('rounds_view.html', rounds=rounds, people=people)
     else:
         return "Invalid HTTP method"
+
+@app.route('/rounds/<int:round_id>', methods=["GET"])
+def round_info(round_id):
+    if request.method == "GET":
+        round = database.get_round_by_round_id(round_id)
+        drink_orders = {}
+        for order in round["orders"]:
+            drink_name = order["drink_name"]
+            if drink_name not in drink_orders:
+                drink_orders[drink_name] = [order]
+            else:
+                drink_orders[drink_name].append(order)
+        round["orders"] = drink_orders
+        print(round)
+        return render_template("orders_view.html", round=round)
+    else:
+        return "Invalid HTTP method"
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

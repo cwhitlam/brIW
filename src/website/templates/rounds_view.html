@@ -1,38 +1,24 @@
 {% extends "layout.html" %}
 {% block title %}Rounds{% endblock %}
+{% set page_title="Current Rounds" %}
 {% block content %}
-<h2 id="page-title">Current Rounds</h2>
-<div class="button">
-    <a href="/rounds">CREATE A ROUND</a>
+<div class="content-block">
+    {% if rounds %}
+        {% for round in rounds %}
+                <button class="button-list" onclick="window.location.href='/rounds/{{round.round_id}}'">
+                    Maker: {{round.maker_fullname}}
+                </button>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h3>Currently there are no rounds</h3>
+    {% endif %}
+    <div id="js-create-round-btn" class="button-main">
+        <button onclick="">CREATE A ROUND</button>
+    </div>
 </div>
-{% if rounds %}
-<table>
-    <tr>
-        <th>&nbsp;Round Maker</th>
-        <th>&nbsp;Number of Orders</th>
-        <th>&nbsp;Expires in</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for round in rounds %}
-        <tr>
-            <td>&nbsp;{{round.maker_fullname}}</td>
-            <td>&nbsp;{{round.num_of_orders}}</td>
-            <td>&nbsp;{{round.minutes_remaining}} mins</td>
-            <td>
-                <a href="#" class="order-btn">
-                    <div>Order</div>
-                </a>
-            </td>
-            <td>
-                <a href="#" class="view-btn">
-                    <div>View</div>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-{% else %}
-<h3>Currently there are no rounds</h3>
-{% endif %}
+{% include "new_round_modal.html" %}
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="./static/js/modal.js"></script>
 {% endblock %}

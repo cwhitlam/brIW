@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
 {% block title %}Rounds{% endblock %}
+{% set page_title = "Drinks" %}
 {% block content %}
-<h2 id="page-title">Add a Drink</h2>
-<form id="js-drink-form" method="POST" onsubmit="event.preventDefault(); validateFormInput();">
-    <label for="drink_name">Drink Name</label>
-    <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
-    <input type="submit" value="Submit">
-</form>
+<div class="content-block">
+    <form id="js-drink-form" method="POST" onsubmit="validateFormInput();">
+        <label for="drink_name">Drink Name</label>
+        <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
+        <input type="submit" value="Submit">
+    </form>
 
-<span id="js-error-message" class="error-message">Please enter a valid string</span>
+    <span id="js-error-message" class="error-message">Please enter a valid string</span>
 
-{% if drink_name %}
-    <h1>{{drink_name}} was added</h1>
-{% endif %}
+    {% if drink_name %}
+        <h1>{{drink_name}} was added</h1>
+    {% endif %}
+</div>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="./static/js/drinks_page.js"></script>
