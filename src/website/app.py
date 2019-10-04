@@ -34,9 +34,10 @@ def rounds_page():
     elif request.method != "GET":
         return "Invalid HTTP method"
     
-    rounds = database.get_rounds()
+    current_rounds = database.get_current_rounds()
+    past_rounds = database.get_past_rounds(3)
     people = database.get_all_people()
-    return render_template('rounds_view.html', rounds=rounds, people=people)
+    return render_template('rounds_view.html', current_rounds=current_rounds, past_rounds=past_rounds, people=people)
 
 @app.route('/rounds/<int:round_id>/orders', methods=["GET", "POST"])
 def round_info(round_id):

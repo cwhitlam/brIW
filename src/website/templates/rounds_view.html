@@ -1,22 +1,36 @@
 {% extends "layout.html" %}
 {% block title %}Rounds{% endblock %}
-{% set page_title="Current Rounds" %}
+{% set page_title="Rounds" %}
 {% block content %}
+<div id="js-create-round-btn">
+    <button onclick="">CREATE A ROUND</button>
+</div>
+
 <div class="content-block">
-    {% if rounds %}
-        {% for round in rounds %}
+    <h3>Current Rounds</h3>
+    {% if current_rounds %}
+        {% for round in current_rounds %}
+            <button class="button-list" onclick="window.location.href='/rounds/{{round.round_id}}/orders'">
+                Maker: {{round.maker_fullname}}
+            </button>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h4>Currently no rounds</h4>
+    {% endif %}
+</div>
+
+{% if past_rounds %}
+<div class="content-block">
+    <h3>Expired Rounds</h3>
+        {% for round in past_rounds %}
                 <button class="button-list" onclick="window.location.href='/rounds/{{round.round_id}}/orders'">
                     Maker: {{round.maker_fullname}}
                 </button>
         {% endfor %}
     </table>
-    {% else %}
-    <h3>Currently there are no rounds</h3>
-    {% endif %}
-    <div id="js-create-round-btn" class="button-main">
-        <button onclick="">CREATE A ROUND</button>
-    </div>
 </div>
+{% endif %}
 {% include "new_round_modal.html" %}
 {% endblock %}
 {% block scripts %}

@@ -6,7 +6,7 @@
         <div class="form-element">
             <label for="maker_id">Who's round is it?</label>
             <select name="maker_id">
-                <option value="" disabled>Select the round maker</option>
+                <option value="" selected disabled>Select the round maker</option>
                 {% for person in people %}
                     <option value="{{person.person_id}}">{{person.full_name}}</option>
                 {% endfor %}

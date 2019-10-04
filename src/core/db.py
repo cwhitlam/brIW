@@ -210,17 +210,19 @@ def get_num_of_orders_for_round(round_id):
     return result["num_of_orders"]
 
 
-def get_rounds():
+def get_current_rounds():
     query = f"""
-        select 
-            concat(p.first_name, ' ' , p.surname) as maker_fullname,
+        SELECT 
+            CONCAT(p.first_name, ' ' , p.surname) AS maker_fullname,
             r.round_id,
             r.expiry_datetime,
-            timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining
-        from
+            TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
+        FROM
             tbl_rounds as r 
-        inner join
+        INNER JOIN
             tbl_people as p on p.person_id=r.maker_id
+        WHERE
+            r.expiry_datetime > NOW()
     """
     result = fetch_all_from_db(query)
     
@@ -232,6 +234,36 @@ def get_rounds():
     if result == None:
         return []
     return result   
+
+def get_past_rounds(num_of_rounds):
+    query = f"""
+        SELECT 
+            CONCAT(p.first_name, ' ' , p.surname) AS maker_fullname,
+            r.round_id,
+            r.expiry_datetime,
+            TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
+        FROM
+            tbl_rounds as r 
+        INNER JOIN
+            tbl_people as p on p.person_id=r.maker_id
+        WHERE
+            r.expiry_datetime < NOW()
+        ORDER BY
+            r.expiry_datetime DESC
+        LIMIT {num_of_rounds}
+    """
+    result = fetch_all_from_db(query)
+    
+    for index in range(0, len(result)):
+        round = result[index]
+        round["num_of_orders"] = get_num_of_orders_for_round(round["round_id"])
+        result[index] = round 
+
+    if result == None:
+        return []
+    return result   
+   
+
 
 def get_orders_by_round_id(round_id):
     query = f"""
