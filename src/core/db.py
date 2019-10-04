@@ -143,7 +143,16 @@ def create_round_with_orders(round):
     round_id = execute_query(query)
     print(round_id)
     create_orders(round.orders, round_id)
-    
+
+def create_round(maker_id, round_duration):
+    query = f"""
+        INSERT INTO
+            tbl_rounds(maker_id, created_datetime, expiry_datetime)
+        VALUES
+            ({maker_id}, NOW(), NOW() + INTERVAL {round_duration} MINUTE)
+    """
+    execute_query(query)
+
 def create_orders(orders, round_id):
     all_orders_string = ""
     for index in range(0,len(orders)):
@@ -178,6 +187,15 @@ def get_current_round():
             (NOW() < r.expiry_datetime)     
     """
     return fetch_one_from_db(query)
+
+def add_order_to_round(round_id, person_id, drink_id):
+    query = f"""
+        INSERT INTO
+            tbl_orders (round_id, person_id, drink_id)
+        VALUES
+            ({round_id}, {person_id}, {drink_id})
+    """
+    execute_query(query)
 
 def get_num_of_orders_for_round(round_id):
     query = f"""

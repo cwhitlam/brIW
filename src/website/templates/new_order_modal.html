@@ -2,13 +2,13 @@
 {% set modal_title = "New Order" %}
 {% set modal_id = "js-create-order-modal" %}
 {% block modal_body %}
-    <form>
+    <form method="POST">
         <div class="form-element">
             <label for="person_id">Who's the drink for?</label>
             <select name="person_id">
                 <option value="" disabled selected>Please select a person...</option>
                 {% for person in people %}
-                    <option value="{{person.id}}">{{person.full_name}}</option>
+                    <option value="{{person.person_id}}">{{person.full_name}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -16,8 +16,8 @@
             <label for="drink_id">What drink would they like?</label>
             <select name="drink_id">
                 <option value="" disabled selected>Please select a drink...</option>
-                {% for person in people %}
-                    <option value="{{drink.id}}">{{drink.name}}</option>
+                {% for drink in drinks %}
+                    <option value="{{drink.drink_id}}">{{drink.name}}</option>
                 {% endfor %}
             </select>
         </div>

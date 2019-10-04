@@ -84,4 +84,6 @@ def get_round_by_round_id(round_id):
 
     result["orders"] = get_orders_by_round_id(result["round_id"])
     return result   
- 
+
+def create_round(maker_id, round_duration):
+    return 

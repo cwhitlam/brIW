@@ -6,9 +6,6 @@ class Person:
         self.full_name = first_name + " " + surname
         self.prefered_drink = prefered_drink
 
-    def __repr__(self):
-        return self.full_name
-
     def set_prefered_drink(self, prefered_drink):
         self.prefered_drink = prefered_drink
 
