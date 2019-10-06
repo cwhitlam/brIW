@@ -9,7 +9,7 @@
 <div class="content-block">
     {% if people %}
         {% for person in people %}
-            <button class="button-list">
+            <button class="button-list" onclick="window.location.href='/people/{{person.person_id}}'"></button>>
                 {{ person.full_name }}
             </button>
         {% endfor %}
@@ -18,6 +18,7 @@
     {% endif %}
 </div>
 {% include "new_person_modal.html" %}
+{% include "edit_person_modal.html" %}
 {% endblock %}
 {% block scripts %}
     <script type="text/javascript" src="/static/js/people_view.js"></script>

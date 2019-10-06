@@ -82,5 +82,15 @@ def people_page():
     
     return render_template("people_view.html", people=people, drinks=drinks)
 
+@app.route("/people/<int:person_id>", methods=["PATCH"])
+def update_person(person_id):
+    if request.method != "PATCH":
+        return "Invalid HTTP Method"
+    
+    preferred_drink_id = request.form.get("preferred_drink_id")
+    database.update_drink_preference(person_id, preferred_drink_id)
+
+    return Response(status=200)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)
