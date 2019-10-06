@@ -2,20 +2,19 @@
 {% block title %}Rounds{% endblock %}
 {% set page_title = "Drinks" %}
 {% block content %}
-<div class="content-block">
-    <form id="js-drink-form" method="POST" onsubmit="validateFormInput();">
-        <label for="drink_name">Drink Name</label>
-        <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
-        <input type="submit" value="Submit">
-    </form>
+    <div class="button">
+        <a id="js-create-drink-btn" onclick="">Add a Drink</a>
+    </div>
+    <div class="content-block">
+        <ul>
+        {% for drink in drinks %}
+            <li>{{ drink.name }}</li>
+        {% endfor %}
+        </ul>
+    </div>
 
-    <span id="js-error-message" class="error-message">Please enter a valid string</span>
-
-    {% if drink_name %}
-        <h1>{{drink_name}} was added</h1>
-    {% endif %}
-</div>
+{% include "new_drink_modal.html" %}
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="./static/js/drinks_page.js"></script>
+<script type="text/javascript" src="/static/js/drinks_view.js"></script>
 {% endblock %}

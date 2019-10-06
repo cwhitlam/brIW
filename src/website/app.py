@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, render_template
 from src.api.person_handler import PersonHandler
 from src.api.drink_handler import DrinkHandler
-import src.core.db as database
+import src.core.db_mock as database
 from src.core.accessor import Accessor
 
 app = Flask(__name__)
@@ -15,15 +15,17 @@ def homepage():
 
 @app.route('/drinks', methods=["GET", "POST"])
 def drinks_page():
-    if request.method == "GET":
-        return render_template('drinks_view.html')
-    elif request.method == "POST":
+    drinks = database.get_all_drinks()
+
+    if request.method == "POST":
         drink_name = request.form.get("drink_name").strip()
         #if (drink_name != ""):
             #database.add_new_drink(drink_name)
         return render_template('drinks_view.html', drink_name=drink_name)
-    else:
+    elif request.method != "GET":
         return "Invalid HTTP method"
+    
+    return render_template('drinks_view.html', drinks=drinks)
 
 @app.route('/rounds', methods=["GET", "POST"])
 def rounds_page():
@@ -62,6 +64,15 @@ def round_info(round_id):
             drink_orders[drink_name].append(order)
     round["orders"] = drink_orders
     return render_template("orders_view.html", round=round, people=people, drinks=drinks)
+
+@app.route("/people", methods=["GET"])
+def people_page():
+    people = database.get_all_people()
+
+    if request.method != "GET":
+        return "Invalid HTTP method"
+    
+    return render_template("people_view.html", people=people)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

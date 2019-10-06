@@ -18,10 +18,6 @@
         width: 50px!important;
     }
 
-    #page-title {
-        font-size: 30px!important;
-    }
-
     table th {
         font-size: 15px;
     }
@@ -68,5 +64,9 @@
 
     select {
         font-size: 15px;
+    }
+
+    .modal-content {
+        width: 90%;
     }
 }

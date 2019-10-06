@@ -14,7 +14,7 @@ def get_all_drinks():
     return [
         {
             "drink_id": 1,
-            "drink_name": "Coffee"
+            "name": "Coffee"
         }
     ]
 
@@ -52,7 +52,7 @@ def get_current_round():
 def get_num_of_orders_for_round(round_id):
     return 1
 
-def get_rounds():
+def get_current_rounds():
     return [
         {
             "maker_fullname": "Chris Smoooth",
@@ -62,7 +62,20 @@ def get_rounds():
             "num_of_orders": 1
         }
     ]
-    
+
+
+def get_past_rounds(num_of_rounds):
+    return [
+        {
+            "maker_fullname": "Chris Test",
+            "round_id": 2,
+            "expiry_datetime": "01-01-2019 00:00:00",
+            "minutes_remaining": -10,
+            "num_of_orders": 2
+        }
+    ]
+
+   
 def get_orders_by_round_id(round_id):
     return [
         {

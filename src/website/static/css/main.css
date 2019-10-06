@@ -42,7 +42,7 @@ h4 {
 
 #main-title {
     color: var(--orange-highlight);
-    font-size: 25px;
+    font-size: 30px;
     max-width: 100px;
     margin-left:130px;
 }
@@ -112,6 +112,7 @@ h4 {
 #page-title {
     color: var(--text-color);
     text-align: center;
+    font-size: 45px;
 }
 
 h3 {

@@ -1,3 +1,22 @@
+//Modal handling
+var modal = document.getElementById("js-create-drink-modal");
+var btn = document.getElementById("js-create-drink-btn");
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 function isValidString(string) {
     regex = /[a-z]+/i
     return string.match(regex);

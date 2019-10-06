@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}People{% endblock %}
+{% set page_title="People" %}
+{% block content %}
+<div class="button" id="js-create-round-btn">
+    <a onclick="">Add a Person</a>
+</div>
+
+<div class="content-block">
+    {% if people %}
+        {% for person in people %}
+            <div class="button-list">
+                <a>{{ person.full_name }}</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Currently no people</h3>
+    {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="/static/js/people_view.js"></script>
+{% endblock %}

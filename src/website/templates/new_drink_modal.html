@@ -1,0 +1,16 @@
+{% extends "modal_template.html" %}
+{% set modal_title = "New Drink" %}
+{% set modal_id = "js-create-drink-modal" %}
+{% block modal_body %}
+    <form id="js-drink-form" method="POST" onsubmit="validateFormInput();">
+        <label for="drink_name">Drink Name</label>
+        <input id="js-drink-input" name="drink_name" type="text" placeholder="Coffee">
+        <input type="submit" value="Submit">
+    </form>
+
+    <span id="js-error-message" class="error-message">Please enter a valid string</span>
+
+    {% if drink_name %}
+        <h1>{{drink_name}} was added</h1>
+    {% endif %}
+{% endblock %}
