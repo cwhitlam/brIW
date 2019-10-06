@@ -1,7 +1,8 @@
 .button {
     width: 100%;
+
     text-align: center;
-    margin: 50px auto 50px auto;
+    margin: auto auto 50px auto;
     cursor: pointer;
 }
 .button a {
@@ -14,6 +15,10 @@
     margin: auto;
     font-size: 20px;
     padding: 10px;
+}
+
+.button a:hover {
+    border-style: solid;
 }
 
 .button-list {
@@ -31,15 +36,6 @@
 }
 
 .button-list:hover {
-    background-color:  var(--orange-highlight);
+    background-color: var(--orange-highlight);
     color: white;
-}
-
-.button-btn {
-    display: inline-block;
-    border-radius: 5px;
-    width: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
 }
