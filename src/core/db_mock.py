@@ -92,7 +92,8 @@ def get_round_by_round_id(round_id):
     result = {
         "maker_fullname": "Chris Smoooth",
         "round_id": 1,
-        "minutes_remaining": 10
+        "minutes_remaining": 10,
+        "expiry_datetime": "2019-10-06 22:00:00"
     }
 
     result["orders"] = get_orders_by_round_id(result["round_id"])

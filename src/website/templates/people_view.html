@@ -9,9 +9,9 @@
 <div class="content-block">
     {% if people %}
         {% for person in people %}
-            <div class="button-list">
-                <a>{{ person.full_name }}</a>
-            </div>
+            <button class="button-list">
+                {{ person.full_name }}
+            </button>
         {% endfor %}
     {% else %}
         <h3>Currently no people</h3>

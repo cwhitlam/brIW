@@ -63,7 +63,7 @@ def round_info(round_id):
         else:
             drink_orders[drink_name].append(order)
     round["orders"] = drink_orders
-    return render_template("orders_view.html", round=round, people=people, drinks=drinks)
+    return render_template("orders_view.html", round=round, people=people, drinks=drinks, testing="testing1")
 
 @app.route("/people", methods=["GET"])
 def people_page():

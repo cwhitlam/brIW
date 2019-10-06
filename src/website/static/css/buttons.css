@@ -1,8 +1,7 @@
 .button {
     width: 100%;
-
     text-align: center;
-    margin: auto auto 50px auto;
+    margin: 50px auto 50px auto;
     cursor: pointer;
 }
 .button a {
@@ -15,6 +14,7 @@
     margin: auto;
     font-size: 20px;
     padding: 10px;
+    text-shadow: 1px 1px black!important;
 }
 
 .button a:hover {
@@ -33,6 +33,13 @@
     font-weight: bold;
     font-size: 20px;
     padding: 10px;
+    text-shadow: 1px 1px black;
+    cursor: pointer;
+}
+
+.button-list .countdown-timer {
+    font-size: 20px;
+    text-shadow: 1px 1px black;
 }
 
 .button-list:hover {

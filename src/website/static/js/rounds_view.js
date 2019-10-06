@@ -1,3 +1,5 @@
+import { countdown } from "./countdown_timer.js";
+
 //Modal handling
 var modal = document.getElementById("js-create-round-modal");
 var btn = document.getElementById("js-create-round-btn");
@@ -16,3 +18,11 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+// Countdown Timers
+const countdownTimers = document.querySelectorAll(".countdown-timer");
+
+countdownTimers.forEach( (timer) => {
+
+  countdown(timer, null, true);
+});

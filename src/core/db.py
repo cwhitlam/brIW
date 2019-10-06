@@ -291,7 +291,8 @@ def get_round_by_round_id(round_id):
         SELECT
             CONCAT(p.first_name, ' ' , p.surname) as maker_fullname,
             r.round_id,
-            timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining
+            timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining,
+            r.expiry_datetime
         FROM
             tbl_rounds as r 
         INNER JOIN

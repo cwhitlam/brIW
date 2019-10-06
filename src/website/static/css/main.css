@@ -10,6 +10,7 @@ body {
     font-family: "Avenir LT W01_55 Roman1475520", Arial, Helvetica, sans-serif;
     margin: 0px;
     font-size: 18px;
+    text-shadow: 2px 2px black;
 }
 
 .scrolling-background {
@@ -162,4 +163,12 @@ a {
 .error-message {
     color: var(--error-color);
     display: none;
+}
+
+.countdown-timer {
+    color: green;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
 }

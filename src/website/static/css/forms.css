@@ -5,6 +5,7 @@ form {
 
 label {
     width: 100%;
+    text-shadow: none;
 }
 
 input[type=text], input[type=number], select {

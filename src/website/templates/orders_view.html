@@ -2,7 +2,10 @@
 {% block title %}Rounds{% endblock %}
 {% set page_title = round.maker_fullname + "'s Round" %}
 {% block content %}
-    <div class="button" id="js-create-order-btn">
+     <div class="countdown-timer">
+        <span id="js-countdown-timer" data-expiry-datetime="{{round.expiry_datetime}}">Loading...</span>
+    </div>
+    <div class="button" style="display: none"id="js-create-order-btn">
         <a>Order a Drink</a>
     </div>
         {% if round.orders %}
@@ -22,5 +25,6 @@
 {% include "new_order_modal.html" %}
 {% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src="/static/js/orders_view.js"></script>
+    <script type="module" src="/static/js/countdown_timer.js"></script>
+    <script type="module" src="/static/js/orders_view.js"></script>
 {% endblock %}
