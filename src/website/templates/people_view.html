@@ -2,7 +2,7 @@
 {% block title %}People{% endblock %}
 {% set page_title="People" %}
 {% block content %}
-<div class="button" id="js-create-round-btn">
+<div class="button" id="js-create-person-btn">
     <a onclick="">Add a Person</a>
 </div>
 
@@ -17,6 +17,7 @@
         <h3>Currently no people</h3>
     {% endif %}
 </div>
+{% include "new_person_modal.html" %}
 {% endblock %}
 {% block scripts %}
     <script type="text/javascript" src="/static/js/people_view.js"></script>

@@ -65,14 +65,22 @@ def round_info(round_id):
     round["orders"] = drink_orders
     return render_template("orders_view.html", round=round, people=people, drinks=drinks, testing="testing1")
 
-@app.route("/people", methods=["GET"])
+@app.route("/people", methods=["GET", "POST"])
 def people_page():
     people = database.get_all_people()
+    drinks = database.get_all_drinks()
 
-    if request.method != "GET":
+    if request.method == "POST":
+        first_name = request.form.get("first_name")
+        surname = request.form.get("surname")
+        drink_id = request.form.get("preferred_drink_id")
+
+        database.add_new_person(first_name, surname, drink_id)
+
+    elif request.method != "GET":
         return "Invalid HTTP method"
     
-    return render_template("people_view.html", people=people)
+    return render_template("people_view.html", people=people, drinks=drinks)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)
