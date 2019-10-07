@@ -27,7 +27,8 @@ class Round:
         return json_rep
 
 class Order:
-    def __init__(self, person, drink):
+    def __init__(self, person, drink, special_requests = ""):
         self.person = person
         self.drink  = drink
+        self.special_requests = special_requests
     

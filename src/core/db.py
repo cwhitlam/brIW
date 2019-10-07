@@ -49,7 +49,6 @@ def execute_query(query, hold_commit = False):
     finally:
         connection.close()
         return cursor.lastrowid
-       
 
 def get_all_people():
     query = """
@@ -102,6 +101,20 @@ def update_drink_preference(person_id, drink_id):
         WHERE person_id={person_id}
     """
     execute_query(query)
+
+def get_drink_preference_by_person_id(person_id):
+    query = f"""
+        SELECT
+            d.drink_id,
+            d.name AS drink_name
+        FROM
+            tbl_drinks AS d
+        INNER JOIN
+            tbl_people AS p ON d.drink_id=p.preferred_drink_id
+        WHERE
+            p.person_id={person_id}
+    """
+    return fetch_one_from_db(query)
 
 def get_person_by_id(person_id):
     query = f"""
@@ -170,25 +183,10 @@ def create_orders(orders, round_id):
     """
     execute_query(query)
 
-def get_current_round():
-    query = f"""
-        SELECT 
-            r.maker_id,
-            r.round_id,
-            p.first_name,
-            p.surname,
-            r.expiry_datetime,
-            TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
-        FROM
-            tbl_rounds AS r 
-        INNER JOIN
-            tbl_people AS p ON p.person_id=r.maker_id
-        WHERE
-            (NOW() < r.expiry_datetime)     
-    """
-    return fetch_one_from_db(query)
-
 def add_order_to_round(round_id, person_id, drink_id, special_requests):
+    if (special_requests == None):
+        special_requests = ""
+    
     query = f"""
         INSERT INTO
             tbl_orders (round_id, person_id, drink_id, special_requests)
@@ -212,6 +210,11 @@ def get_num_of_orders_for_round(round_id):
 def get_current_rounds():
     query = f"""
         SELECT 
+            p.person_id AS maker_id,
+            p.first_name,
+            p.surname,
+            d.name AS drink_name,
+            d.drink_id,
             CONCAT(p.first_name, ' ' , p.surname) AS maker_fullname,
             r.round_id,
             DATE_ADD(r.expiry_datetime, INTERVAL 1 HOUR) AS expiry_datetime,
@@ -219,7 +222,9 @@ def get_current_rounds():
         FROM
             tbl_rounds as r 
         INNER JOIN
-            tbl_people as p on p.person_id=r.maker_id
+            tbl_people as p ON p.person_id=r.maker_id
+        LEFT JOIN
+            tbl_drinks as d ON p.preferred_drink_id=d.drink_id
         WHERE
             r.expiry_datetime > NOW()
     """
@@ -264,7 +269,8 @@ def get_past_rounds(num_of_rounds):
    
 def get_orders_by_round_id(round_id):
     query = f"""
-        SELECT 
+        SELECT
+            o.order_id, 
             o.person_id,
             p.first_name,
             p.surname,

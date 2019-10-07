@@ -1,6 +1,4 @@
 from flask import Flask, request, Response, render_template, redirect
-from src.api.person_handler import PersonHandler
-from src.api.drink_handler import DrinkHandler
 import src.core.db as database
 from src.core.accessor import Accessor
 
@@ -15,16 +13,16 @@ def homepage():
 
 @app.route('/drinks', methods=["GET", "POST"])
 def drinks_page():
-    drinks = database.get_all_drinks()
-
+    
     if request.method == "POST":
         drink_name = request.form.get("drink_name").strip()
-        #if (drink_name != ""):
-            #database.add_new_drink(drink_name)
-        return render_template('drinks_view.html', drink_name=drink_name)
+        if (drink_name != ""):
+            database.add_new_drink(drink_name)
+        return redirect("/drinks")
     elif request.method != "GET":
         return "Invalid HTTP method"
-    
+
+    drinks = database.get_all_drinks()
     return render_template('drinks_view.html', drinks=drinks)
 
 @app.route('/rounds', methods=["GET", "POST"])
@@ -33,6 +31,7 @@ def rounds_page():
         maker_id = request.form.get("maker_id")
         round_duration = int(request.form.get("round_duration"))
         database.create_round(maker_id, round_duration) 
+        return redirect("/rounds")
     elif request.method != "GET":
         return "Invalid HTTP method"
     
@@ -66,7 +65,7 @@ def round_info(round_id):
     round["orders"] = drink_orders
     return render_template("orders_view.html", round=round, people=people, drinks=drinks, testing="testing1")
 
-@app.route("/people", methods=["GET", "POST", "PATCH"])
+@app.route("/people", methods=["GET", "POST"])
 def people_page():
     people = database.get_all_people()
     drinks = database.get_all_drinks()
@@ -77,7 +76,7 @@ def people_page():
         drink_id = request.form.get("preferred_drink_id")
 
         database.add_new_person(first_name, surname, drink_id)
-
+        return redirect("/people")
     elif request.method != "GET":
         return "Invalid HTTP method"
     
