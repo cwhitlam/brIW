@@ -209,7 +209,6 @@ def get_num_of_orders_for_round(round_id):
     result = fetch_one_from_db(query)
     return result["num_of_orders"]
 
-
 def get_current_rounds():
     query = f"""
         SELECT 
