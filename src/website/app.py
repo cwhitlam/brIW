@@ -43,12 +43,13 @@ def rounds_page():
 
 @app.route('/rounds/<int:round_id>/orders', methods=["GET", "POST"])
 def round_info(round_id):
+    print(request.method)
     if request.method == "POST":
         person_id = request.form.get("person_id")
         drink_id = request.form.get("drink_id")
         special_requests = request.form.get("special_requests")
-        database.add_order_to_round(round_id, person_id, drink_id)
-    
+        database.add_order_to_round(round_id, person_id, drink_id, special_requests)
+        return redirect('/rounds/' + str(round_id) + '/orders')
     elif request.method != "GET":
         return "Invalid HTTP method"
     

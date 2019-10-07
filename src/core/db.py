@@ -188,12 +188,12 @@ def get_current_round():
     """
     return fetch_one_from_db(query)
 
-def add_order_to_round(round_id, person_id, drink_id):
+def add_order_to_round(round_id, person_id, drink_id, special_requests):
     query = f"""
         INSERT INTO
-            tbl_orders (round_id, person_id, drink_id)
+            tbl_orders (round_id, person_id, drink_id, special_requests)
         VALUES
-            ({round_id}, {person_id}, {drink_id})
+            ({round_id}, {person_id}, {drink_id}, '{special_requests}')
     """
     execute_query(query)
 
@@ -262,7 +262,6 @@ def get_past_rounds(num_of_rounds):
         return []
     return result   
    
-
 def get_orders_by_round_id(round_id):
     query = f"""
         SELECT 
@@ -271,7 +270,8 @@ def get_orders_by_round_id(round_id):
             p.surname,
             CONCAT(p.first_name, ' ' , p.surname) AS fullname,
             o.drink_id,
-            d.name AS drink_name
+            d.name AS drink_name,
+            o.special_requests
         FROM 
             tbl_orders AS o
         INNER JOIN

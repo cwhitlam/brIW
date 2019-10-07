@@ -22,6 +22,7 @@ window.onclick = function(event) {
 const timerSpan = document.getElementById("js-countdown-timer");
 const onExpiry = function () {
   openModalBtn.style.display = "none";
+
 }
 
 countdown(timerSpan, onExpiry);
