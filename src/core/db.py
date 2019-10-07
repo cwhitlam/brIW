@@ -215,7 +215,7 @@ def get_current_rounds():
         SELECT 
             CONCAT(p.first_name, ' ' , p.surname) AS maker_fullname,
             r.round_id,
-            r.expiry_datetime,
+            DATE_ADD(r.expiry_datetime, INTERVAL 1 HOUR) AS expiry_datetime,
             TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
         FROM
             tbl_rounds as r 
@@ -240,7 +240,7 @@ def get_past_rounds(num_of_rounds):
         SELECT 
             CONCAT(p.first_name, ' ' , p.surname) AS maker_fullname,
             r.round_id,
-            r.expiry_datetime,
+            DATE_ADD(r.expiry_datetime, INTERVAL 1 HOUR) AS expiry_datetime,
             TIMESTAMPDIFF(MINUTE, NOW(), r.expiry_datetime) AS minutes_remaining
         FROM
             tbl_rounds as r 
@@ -263,7 +263,6 @@ def get_past_rounds(num_of_rounds):
         return []
     return result   
    
-
 
 def get_orders_by_round_id(round_id):
     query = f"""
@@ -292,7 +291,7 @@ def get_round_by_round_id(round_id):
             CONCAT(p.first_name, ' ' , p.surname) as maker_fullname,
             r.round_id,
             timestampdiff(minute, now(), r.expiry_datetime) as minutes_remaining,
-            r.expiry_datetime
+            DATE_ADD(r.expiry_datetime, INTERVAL 1 HOUR) AS expiry_datetime
         FROM
             tbl_rounds as r 
         INNER JOIN

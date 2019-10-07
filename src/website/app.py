@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, render_template
 from src.api.person_handler import PersonHandler
 from src.api.drink_handler import DrinkHandler
-import src.core.db_mock as database
+import src.core.db as database
 from src.core.accessor import Accessor
 
 app = Flask(__name__)
@@ -84,6 +84,8 @@ def people_page():
 
 @app.route("/people/<int:person_id>", methods=["PATCH"])
 def update_person(person_id):
+    
+
     if request.method != "PATCH":
         return "Invalid HTTP Method"
     

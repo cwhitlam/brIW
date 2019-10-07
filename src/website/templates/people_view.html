@@ -9,7 +9,7 @@
 <div class="content-block">
     {% if people %}
         {% for person in people %}
-            <button class="button-list" onclick="window.location.href='/people/{{person.person_id}}'"></button>>
+            <button class="button-list js-edit-person-btn" data-person-id="{{person.person_id}}">
                 {{ person.full_name }}
             </button>
         {% endfor %}

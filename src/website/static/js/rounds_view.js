@@ -21,8 +21,6 @@ window.onclick = function(event) {
 
 // Countdown Timers
 const countdownTimers = document.querySelectorAll(".countdown-timer");
-
 countdownTimers.forEach( (timer) => {
-
-  countdown(timer, null, true);
+ countdown(timer, null, true);
 });
