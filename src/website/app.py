@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, redirect
 from src.api.person_handler import PersonHandler
 from src.api.drink_handler import DrinkHandler
 import src.core.db as database
@@ -65,7 +65,7 @@ def round_info(round_id):
     round["orders"] = drink_orders
     return render_template("orders_view.html", round=round, people=people, drinks=drinks, testing="testing1")
 
-@app.route("/people", methods=["GET", "POST"])
+@app.route("/people", methods=["GET", "POST", "PATCH"])
 def people_page():
     people = database.get_all_people()
     drinks = database.get_all_drinks()
@@ -82,17 +82,15 @@ def people_page():
     
     return render_template("people_view.html", people=people, drinks=drinks)
 
-@app.route("/people/<int:person_id>", methods=["PATCH"])
-def update_person(person_id):
-    
-
-    if request.method != "PATCH":
+@app.route("/people/edit", methods=["POST"])
+def update_person():
+    if request.method != "POST":
         return "Invalid HTTP Method"
-    
     preferred_drink_id = request.form.get("preferred_drink_id")
+    person_id = request.form.get("person_id")
     database.update_drink_preference(person_id, preferred_drink_id)
 
-    return Response(status=200)
+    return redirect("/people")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

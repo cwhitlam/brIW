@@ -2,24 +2,25 @@
 {% set modal_title = "Edit Preferences" %}
 {% set modal_id = "js-edit-person-modal" %}
 {% block modal_body %}
-    <form method="PATCH">
+    <form method="POST" action="/people/edit">
         <div class="form-element">
             <label for="first_name">First name</label>
-            <input disabled name="first_name" type="text" placeholder="John"/>
+            <input id="js-first-name-input" disabled name="first_name" type="text" placeholder="John"/>
         </div>
         <div class="form-element">
             <label for="surname">Surname</label>
-            <input disabled name="surname" type="text" placeholder="Smith"/>
+            <input id="js-surname-input" disabled name="surname" type="text" placeholder="Smith"/>
         </div>
         <div class="form-element">
             <label for="preferred_drink_id">What's their preferred drink?</label>
-            <select name="preferred_drink_id">
+            <select id="js-drink-select" name="preferred_drink_id">
                 <option value="" disabled selected>Please select thier preferred drink...</option>
                 {% for drink in drinks %}
                     <option value="{{drink.drink_id}}">{{drink.name}}</option>
                 {% endfor %}
             </select>
         </div>
+        <input id="js-person-id-input" name="person_id" type="hidden" value=""/>
         <div class="form-element">
             <input class="button-main" type="submit" value="Update">
         </div>
