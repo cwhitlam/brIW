@@ -1,0 +1,40 @@
+h1 {
+    color:white;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 50px;
+    background-color: blueviolet;
+}
+
+h2 {
+    color: purple;
+    font-size: 30px;
+}
+
+body {
+    background-image: url("https://media0.giphy.com/media/AGY8p0HH50mcg/giphy.gif?cid=790b7611f944ca86be91854275f5294fa0c9de4fc78c328c&rid=giphy.gifi");
+    /*background-image: url("https://media.giphy.com/media/10VxStkL959Ze0/giphy.gif");*/
+    background-repeat: repeat;
+}
+
+p {
+    font-size: 30px;
+    color: white;
+    background-color:green;
+}
+
+#marqueediv {
+    background-color: cadetblue;
+    max-width: 540px;
+    text-align: center;
+}
+
+table {
+    font-size: 40px;
+    color: purple;
+}
+
+img {
+    width: 30%;
+    margin: auto;
+}
