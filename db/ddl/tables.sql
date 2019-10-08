@@ -33,3 +33,6 @@ CREATE TABLE chris.tbl_orders (
     FOREIGN KEY (person_id) REFERENCES tbl_people(person_id),
     FOREIGN KEY (drink_id) REFERENCES tbl_drinks(drink_id)
 );
+
+
+ALTER TABLE tbl_orders ADD special_requests VARCHAR(100);  

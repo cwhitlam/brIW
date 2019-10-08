@@ -68,3 +68,50 @@ An example request would be:
 ```bash
 curl -X POST localhost:8081/drinks -H "Content-Type: application/json" -d '{"drink_name": "Mocha"}'
 ```
+
+## /rounds
+### GET
+Used to get a list of all currently unexpired rounds and their orders
+```
+curl localhost:8081/rounds
+```
+
+### POST
+Creates a new round without any orders
+
+JSON request data is expected in the following format:
+
+```json
+{
+    "maker_id": 1,
+    "round_duration": 30
+}
+```
+
+A full request would look like this:
+
+```bash
+curl -X POST localhost:8081/rounds -H "Content-Type: application/json" -d '{"maker_id": 1, "round_duration" 30}'
+
+```
+
+## /rounds/\<int:round_id\>/orders
+### GET
+Gets all the orders assigned to the round with id given by \<int:round_id\>
+
+```bash
+curl localhost:8081/rounds/18/orders
+```
+
+### POST
+Used to add an order to a round.
+
+JSON request data is expected in the following format:
+
+```json
+{
+    "person_id": 1,
+    "drink_id": 2,
+    "special_requests": "2 sugars"
+}
+```

@@ -12,21 +12,6 @@ body {
     text-shadow: 2px 2px black;
 }
 
-.scrolling-background {
-    min-width: 100%;
-    min-height: 100%;
-    background: url(/static/img/coffee_bean_background.jpg);
-    background-repeat: repeat;
-    animation: scroll 60s linear infinite;
-    position: absolute;
-    background-position: 0,0;
-    background-size: auto 100%;
-    background-attachment: scroll;
-    z-index: -20;
-    top: 0;
-    left: 0;
-}
-
 h4 {
     text-align: center;
 }
@@ -64,12 +49,11 @@ h4 {
     top: 25px;
 }
 
-#menu-icon {
+#try-now {
     position: absolute;
-    right: 50px;
+    right: 10px;
     top: 50px;
-    width: 100px;
-    height: 50px;
+    width: 150px!important;
     background-color: var(--grey-highlight);
     border: none;
 }
