@@ -28,7 +28,7 @@ def drinks_page():
 @app.route('/rounds', methods=["GET", "POST"])
 def rounds_page():
     if request.method == "POST":
-        maker_id = request.form.get("maker_id")
+        maker_id = int(request.form.get("maker_id"))
         round_duration = int(request.form.get("round_duration"))
         database.create_round(maker_id, round_duration) 
         return redirect("/rounds")

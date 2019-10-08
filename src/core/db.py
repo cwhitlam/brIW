@@ -12,11 +12,11 @@ def get_db_connection():
     except Exception as e:
         print("Error cannot connect to database: " + e)
 
-def fetch_all_from_db(query):
+def fetch_all_from_db(query, parameters = None):
     connection = get_db_connection()
     try:
         cursor = connection.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(query)
+        cursor.execute(query, parameters)
         return cursor.fetchall()
     except Exception as e:
         print (e)
@@ -24,11 +24,11 @@ def fetch_all_from_db(query):
     finally:
         connection.close()
 
-def fetch_one_from_db(query):
+def fetch_one_from_db(query, parameters = None):
     connection = get_db_connection()
     try:
         cursor = connection.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(query)
+        cursor.execute(query, parameters)
         return cursor.fetchone()
     except Exception as e:
         print (e)
@@ -36,11 +36,11 @@ def fetch_one_from_db(query):
     finally:
         connection.close()
 
-def execute_query(query, hold_commit = False):
+def execute_query(query, parameters = None, hold_commit = False):
     connection = get_db_connection()
     try:
         cursor = connection.cursor()
-        cursor.execute(query)
+        cursor.execute(query, parameters)
         if not hold_commit:
             connection.commit()
     except Exception as e:
@@ -84,23 +84,26 @@ def add_new_person(first_name, surname, preferred_drink_id):
 
     query = f"""
         INSERT INTO tbl_people (first_name, surname, preferred_drink_id)
-        VALUES ('{first_name}','{surname}', {preferred_drink_id})
+        VALUES (%s, %s, %s)
     """
-    execute_query(query)
+    paramaters = (first_name, surname, preferred_drink_id)
+    execute_query(query, paramaters)
 
 def add_new_drink(drink_name):
     query = f"""
         INSERT INTO tbl_drinks (name)
-        VALUES ('{drink_name}')
+        VALUES (%s)
     """
-    execute_query(query)
+    parameters = (drink_name)
+    execute_query(query, parameters)
 
 def update_drink_preference(person_id, drink_id):
     query = f"""
-        UPDATE tbl_people SET preferred_drink_id = {drink_id} 
-        WHERE person_id={person_id}
+        UPDATE tbl_people SET preferred_drink_id = %s 
+        WHERE person_id = %s
     """
-    execute_query(query)
+    parameters = (drink_id, person_id)
+    execute_query(query, parameters)
 
 def get_drink_preference_by_person_id(person_id):
     query = f"""
@@ -112,9 +115,10 @@ def get_drink_preference_by_person_id(person_id):
         INNER JOIN
             tbl_people AS p ON d.drink_id=p.preferred_drink_id
         WHERE
-            p.person_id={person_id}
+            p.person_id = %s
     """
-    return fetch_one_from_db(query)
+    parameters = (person_id)
+    return fetch_one_from_db(query, parameters)
 
 def get_person_by_id(person_id):
     query = f"""
@@ -129,9 +133,10 @@ def get_person_by_id(person_id):
         LEFT JOIN
             tbl_drinks AS d ON d.drink_id=p.preferred_drink_id
         WHERE
-            p.person_id = {person_id}
+            p.person_id = %s
     """
-    return fetch_one_from_db(query)
+    parameters = (person_id)
+    return fetch_one_from_db(query, parameters)
 
 def get_drink_by_id(drink_id):
     query = f"""
@@ -141,20 +146,21 @@ def get_drink_by_id(drink_id):
         FROM
             tbl_drinks AS d
         WHERE
-            d.drink_id = {drink_id}
+            d.drink_id = %s
     """
-    return fetch_one_from_db(query)
+    parameters = (drink_id)
+    return fetch_one_from_db(query, parameters)
 
 def create_round_with_orders(round):
     query = f"""
         INSERT INTO 
             tbl_rounds(maker_id, created_datetime, expiry_datetime)
         VALUES 
-            ({round.maker.id}, NOW(), NOW() + INTERVAL {round.minutes_remaining} MINUTE)
+            (%s, NOW(), NOW() + INTERVAL %s MINUTE)
 
     """
-    round_id = execute_query(query)
-    print(round_id)
+    parameters = (round.maker.id, round.minutes_remaining)
+    round_id = execute_query(query, parameters)
     create_orders(round.orders, round_id)
 
 def create_round(maker_id, round_duration):
@@ -162,26 +168,10 @@ def create_round(maker_id, round_duration):
         INSERT INTO
             tbl_rounds(maker_id, created_datetime, expiry_datetime)
         VALUES
-            ({maker_id}, NOW(), NOW() + INTERVAL {round_duration} MINUTE)
+            (%s, NOW(), NOW() + INTERVAL %d MINUTE)
     """
-    execute_query(query)
-
-def create_orders(orders, round_id):
-    all_orders_string = ""
-    for index in range(0,len(orders)):
-        order = orders[index]
-        order_string = f"({round_id}, {order.person.id}, {order.drink.id})"
-        if index < len(orders)-1:
-            order_string += ","
-        all_orders_string += order_string
-
-    query = f"""
-        INSERT INTO 
-            tbl_orders(round_id, person_id, drink_id)
-        VALUES
-            {all_orders_string}
-    """
-    execute_query(query)
+    parameters = (maker_id, round_duration)
+    execute_query(query, parameters)
 
 def add_order_to_round(round_id, person_id, drink_id, special_requests):
     if (special_requests == None):
@@ -191,9 +181,10 @@ def add_order_to_round(round_id, person_id, drink_id, special_requests):
         INSERT INTO
             tbl_orders (round_id, person_id, drink_id, special_requests)
         VALUES
-            ({round_id}, {person_id}, {drink_id}, '{special_requests}')
+            (%s, %s, %s, %s)
     """
-    execute_query(query)
+    parameters = (round_id, person_id, drink_id, special_requests)
+    execute_query(query, parameters)
 
 def get_num_of_orders_for_round(round_id):
     query = f"""
@@ -202,9 +193,12 @@ def get_num_of_orders_for_round(round_id):
         FROM
             tbl_orders as o
         WHERE
-            (o.round_id = {round_id})
+            (o.round_id = %s)
     """
-    result = fetch_one_from_db(query)
+    parameters = (round_id)
+    result = fetch_one_from_db(query, parameters)
+    if result == []:
+        return 0
     return result["num_of_orders"]
 
 def get_current_rounds():
@@ -232,7 +226,7 @@ def get_current_rounds():
     
     for index in range(0, len(result)):
         round = result[index]
-        round["num_of_orders"] = get_num_of_orders_for_round(round["round_id"])
+        round["num_of_orders"] = get_num_of_orders_for_round(int(round["round_id"]))
         result[index] = round 
 
     if result == None:
@@ -254,13 +248,14 @@ def get_past_rounds(num_of_rounds):
             r.expiry_datetime < NOW()
         ORDER BY
             r.expiry_datetime DESC
-        LIMIT {num_of_rounds}
+        LIMIT %s
     """
-    result = fetch_all_from_db(query)
+    parameters = (int(num_of_rounds))
+    result = fetch_all_from_db(query, parameters)
     
     for index in range(0, len(result)):
         round = result[index]
-        round["num_of_orders"] = get_num_of_orders_for_round(round["round_id"])
+        round["num_of_orders"] = get_num_of_orders_for_round(int(round["round_id"]))
         result[index] = round 
 
     if result == None:
@@ -285,10 +280,10 @@ def get_orders_by_round_id(round_id):
         INNER JOIN
             tbl_drinks AS d ON o.drink_id = d.drink_id 
         WHERE
-            o.round_id = {round_id}
+            o.round_id = %s
     """
-
-    return fetch_all_from_db(query)
+    parameters = (round_id)
+    return fetch_all_from_db(query, parameters)
 
 def get_round_by_round_id(round_id):
     query = f"""
@@ -302,9 +297,10 @@ def get_round_by_round_id(round_id):
         INNER JOIN
             tbl_people as p on p.person_id=r.maker_id
         WHERE 
-            r.round_id = {round_id}
+            r.round_id = %s
     """
-    result = fetch_one_from_db(query)
+    parameters = (round_id)
+    result = fetch_one_from_db(query, parameters)
     
     if result == None:
         return []
