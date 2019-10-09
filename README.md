@@ -30,3 +30,8 @@ To run tests navigate to the project directory and run:
 ```
 python3 -m test.run_tests
 ```
+
+Test coverage can be checked with where <user> is your user:
+```
+coverage report -m --omit="/home/<user>/.*"
+```

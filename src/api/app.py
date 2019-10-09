@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, json
 from src.api.request_handlers import PersonHandler, DrinkHandler, RoundHandler, OrderHandler
 app = Flask(__name__)
 
@@ -6,20 +6,30 @@ app = Flask(__name__)
 def people():
     handler = PersonHandler()
     if request.method == "GET":
-        return handler.get()
+        data = handler.get()
+        response = app.response_class(
+            response=data,
+            status=200,
+            mimetype="application/json"
+        )
+        return response
+
     elif request.method == "POST":
-        content = request.json
         try:
+            content = request.json
             handler.post(content)
             return Response(status=201)
+
         except Exception as e:
             print(e)
             return Response(status=422)
+
     elif request.method == "PATCH":
-        content = request.json
         try:
+            content = request.json
             handler.patch(content)
-            return Response(status=201)
+            return Response(status=204)
+
         except Exception as e:
             print(e)
             return Response(status=422)
@@ -30,10 +40,17 @@ def people():
 def drinks():
     handler = DrinkHandler()
     if request.method == "GET":
-        return handler.get()
+        data = handler.get()
+        response = app.response_class(
+            response=data,
+            status=200,
+            mimetype="application/json"
+        )
+        return response
+
     elif request.method == "POST":
-        content = request.json
         try:
+            content = request.json
             handler.post(content)
             return Response(status=201)
         except Exception as e:
@@ -46,10 +63,17 @@ def drinks():
 def rounds():
     handler = RoundHandler()
     if request.method == "GET":
-        return handler.get()
+        data = handler.get()
+        response = app.response_class(
+            response=data,
+            status=200,
+            mimetype="application/json"
+        )
+        return response
+
     elif request.method == "POST":
-        content = request.json
         try:
+            content = request.json
             handler.post(content)
             return Response(status=201)
         except Exception as e:
@@ -62,10 +86,17 @@ def rounds():
 def orders(round_id):
     handler = OrderHandler()
     if request.method == "GET":
-        return handler.get(round_id)
+        data = handler.get(round_id)
+        response = app.response_class(
+            response=data,
+            status=200,
+            mimetype="application/json"
+        )
+        return response
+
     elif request.method == "POST":
-        content = request.json
         try:
+            content = request.json
             handler.post(round_id, content)
             return Response(status=201)
         except Exception as e:
@@ -74,8 +105,6 @@ def orders(round_id):
     else:
         return "Invalid HTTP method"
 
-
-   
 if __name__ == "__main__":
     host="0.0.0.0"
     port="8081"
