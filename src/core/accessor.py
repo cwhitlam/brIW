@@ -4,8 +4,8 @@ from src.core.round import Round, Order
 import src.core.db as queries
 
 class Accessor:
-    def __init__(self, file_man =None):
-        self.file_man = file_man
+    def __init__(self):
+        pass
 
     def get_people(self):
         result = queries.get_all_people()
@@ -25,23 +25,6 @@ class Accessor:
             drink_obj = Drink(drink["drink_id"], drink["name"])
             drinks[drink["drink_id"]] = drink_obj
         return drinks
-
-    def get_person(self, person_id):
-        result = queries.get_person_by_id(person_id)
-        drink = None
-        if (result["preferred_drink_id"] != None):
-            drink = Drink(result["preferred_drink_id"], result["drink_name"])
-        person = Person(
-            result["person_id"], 
-            result["first_name"],
-            result["surname"], 
-            drink
-        )
-        return person, drink
-
-    def get_drink(self, drink_id):
-        result = queries.get_drink_by_id(drink_id)
-        return Drink(result["drink_id"], result["drink_name"])
 
     def get_current_rounds(self):
         round_result = queries.get_current_rounds()

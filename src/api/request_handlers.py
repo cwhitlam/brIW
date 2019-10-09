@@ -27,8 +27,8 @@ class PersonHandler():
 class DrinkHandler():
     def get(self):
         acc = Accessor()
-        people = acc.get_drinks()
-        json_encoded = json.dumps(people, cls=MyEncoder)
+        drinks = acc.get_drinks()
+        json_encoded = json.dumps(drinks, cls=MyEncoder)
         return json_encoded
 
     def post(self, data):
