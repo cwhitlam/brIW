@@ -11,8 +11,7 @@ CREATE TABLE chris.tbl_people (
     person_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     surname VARCHAR(100) NOT NULL,
-    preferred_drink_id INTEGER,
-    FOREIGN KEY (preferred_drink_id) REFERENCES tbl_drinks(drink_id)
+    preferred_drink_id INTEGER
 );
 
 CREATE TABLE chris.tbl_rounds (
