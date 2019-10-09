@@ -28,7 +28,7 @@ def people():
         try:
             content = request.json
             handler.patch(content)
-            return Response(status=204)
+            return Response(status=200)
 
         except Exception as e:
             print(e)

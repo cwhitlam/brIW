@@ -50,7 +50,7 @@ class TestAPI(unittest.TestCase):
         )
         
         post.assert_called_once_with(payload)
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 200)
 
     @unittest.mock.patch("src.core.db.add_new_person")
     def test_person_integration_POST(self, add_new_person):
