@@ -1,6 +1,7 @@
 from flask import Flask, request, Response, render_template, redirect
 import src.core.db as database
 from src.core.accessor import Accessor
+import json
 
 app = Flask(__name__)
 
@@ -91,6 +92,15 @@ def update_person():
     database.update_drink_preference(person_id, preferred_drink_id)
 
     return redirect("/people")
+
+@app.route("/people/<int:person_id>/drink", methods=["GET"])
+def get_drink_preference_info(person_id):
+    if request.method != "GET":
+        return "Invalid HTTP Method"
+    
+    result = database.get_drink_preference_by_person_id(person_id)
+    json_encoded = json.dumps(result) 
+    return json_encoded
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

@@ -26,3 +26,37 @@ const onExpiry = function () {
 }
 
 countdown(timerSpan, onExpiry);
+
+
+// Get person's drink preference
+const personSelect = document.querySelector("#js-modal-person-select");
+
+personSelect.onchange = function () {
+  const personId = this.value;
+  if (personId != "") {
+    preSelectPersonsDrinkPreference(personId)
+  }
+}
+
+const preSelectPersonsDrinkPreference = function(personId) {
+  const drinkSelect = document.querySelector("#js-modal-drink-select");
+  const url   = "/people/" + personId + "/drink";
+  const xhttp = new XMLHttpRequest();
+  
+  xhttp.open("GET", url, true);
+
+  xhttp.onprogress = function(e) {
+    drinkSelect.value = "";
+  }
+
+  xhttp.onload = function(e) {
+    const jsonResponse = JSON.parse(xhttp.responseText);
+    if (jsonResponse == null || jsonResponse["drink_id"] == null) {
+      return;
+    }
+    
+    drinkSelect.value = jsonResponse["drink_id"];
+  }
+
+  xhttp.send(null);
+}
