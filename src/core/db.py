@@ -79,9 +79,6 @@ def get_all_drinks():
 
 def add_new_person(first_name, surname, preferred_drink_id):
 
-    if (preferred_drink_id == None):
-        preferred_drink_id = "NULL"
-
     query = f"""
         INSERT INTO tbl_people (first_name, surname, preferred_drink_id)
         VALUES (%s, %s, %s)
@@ -151,24 +148,12 @@ def get_drink_by_id(drink_id):
     parameters = (drink_id)
     return fetch_one_from_db(query, parameters)
 
-def create_round_with_orders(round):
-    query = f"""
-        INSERT INTO 
-            tbl_rounds(maker_id, created_datetime, expiry_datetime)
-        VALUES 
-            (%s, NOW(), NOW() + INTERVAL %s MINUTE)
-
-    """
-    parameters = (round.maker.id, round.minutes_remaining)
-    round_id = execute_query(query, parameters)
-    create_orders(round.orders, round_id)
-
 def create_round(maker_id, round_duration):
     query = f"""
         INSERT INTO
             tbl_rounds(maker_id, created_datetime, expiry_datetime)
         VALUES
-            (%s, NOW(), NOW() + INTERVAL %d MINUTE)
+            (%s, NOW(), NOW() + INTERVAL %s MINUTE)
     """
     parameters = (maker_id, round_duration)
     execute_query(query, parameters)
