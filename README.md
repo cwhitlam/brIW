@@ -26,4 +26,7 @@ For GDPR reasons, you'll need to create `person.json` and `drinks.json` files in
 ## Contributing
 To contribute you can fork the repository and make any changes. Make sure you run all tests.  
 
-To run tests you can run `pytest` in the `miniproject` directory.
+To run tests navigate to the project directory and run:
+```
+python3 -m test.run_tests
+```
