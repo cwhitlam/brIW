@@ -83,7 +83,7 @@ def add_new_person(first_name, surname, preferred_drink_id):
         INSERT INTO tbl_people (first_name, surname, preferred_drink_id)
         VALUES (%s, %s, %s)
     """
-    paramaters = (first_name, surname, preferred_drink_id)
+    paramaters = (first_name.capitalize(), surname.capitalize(), preferred_drink_id)
     execute_query(query, paramaters)
 
 def add_new_drink(drink_name):
@@ -91,7 +91,8 @@ def add_new_drink(drink_name):
         INSERT INTO tbl_drinks (name)
         VALUES (%s)
     """
-    parameters = (drink_name)
+
+    parameters = (drink_name.capitalize())
     execute_query(query, parameters)
 
 def update_drink_preference(person_id, drink_id):
