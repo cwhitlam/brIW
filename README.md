@@ -33,5 +33,6 @@ python3 -m test.run_tests
 
 Test coverage can be checked with where <user> is your user:
 ```
-coverage report -m --omit="/home/<user>/.*"
+coverage run --source=src -m test.run_tests
+coverage report -m  
 ```
