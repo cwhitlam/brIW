@@ -7,11 +7,15 @@
     </div>
 
     <div class="content-block">
-        <ul>
-        {% for drink in drinks %}
-            <li>{{ drink.name }}</li>
-        {% endfor %}
-        </ul>
+        {% if drinks %}
+            <ul>
+            {% for drink in drinks %}
+                <li>{{ drink.name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <h3>Currently no drinks</h3>
+        {% endif %}
     </div>
 
 {% include "new_drink_modal.html" %}
